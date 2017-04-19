@@ -3,9 +3,9 @@
 
 > Easily build big and bigger forms with minimal effort
 
-![](https://github.com/adib2149/BottomNavBar/blob/master/screenshot/screenshot1.gif)
-![](https://github.com/adib2149/BottomNavBar/blob/master/screenshot/screenshot2.gif)
-![](https://github.com/adib2149/BottomNavBar/blob/master/screenshot/screenshot3.gif)
+![](https://github.com/adib2149/FormMaster/blob/master/screenshot/screenshot1.gif)
+![](https://github.com/adib2149/FormMaster/blob/master/screenshot/screenshot2.gif)
+![](https://github.com/adib2149/FormMaster/blob/master/screenshot/screenshot3.gif)
 
 This library aids in building bigger forms on-the-fly. Forms with large number of elements can easily be added programmatically within a few minutes.
 
