@@ -1,5 +1,4 @@
 # Form-Master
-==================
 
 > Easily build big and bigger forms with minimal effort
 
