@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="headerTextSize">15sp</dimen>
+    <dimen name="elementTextTitleSize">14sp</dimen>
+    <dimen name="elementTextValueSize">13sp</dimen>
+</resources>
