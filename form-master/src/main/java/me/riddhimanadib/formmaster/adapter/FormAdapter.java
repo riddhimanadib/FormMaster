@@ -191,6 +191,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             FormElement formElement = (FormElement) currentObject;
             holder.mTextViewTitle.setText(formElement.getTitle());
             holder.mEditTextValue.setText(formElement.getValue());
+            holder.mEditTextValue.setHint(formElement.getHint());
 
             switch (getItemViewType(position)) {
                 case FormElement.TYPE_EDITTEXT_TEXT_SINGLELINE:
