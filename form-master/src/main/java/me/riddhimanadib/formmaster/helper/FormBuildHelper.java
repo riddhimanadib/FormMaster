@@ -59,4 +59,20 @@ public class FormBuildHelper {
         return this.mFormAdapter.getValueAtTag(tag);
     }
 
+    /**
+     *
+     * return true if the form is valid
+     *
+     * @return
+     */
+    public boolean isValidForm() {
+        for (int i = 0; i < this.mFormAdapter.getItemCount(); i++) {
+            FormElement formElement = this.mFormAdapter.getValueAtIndex(i);
+            if (formElement.isRequired() & formElement.getValue() == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

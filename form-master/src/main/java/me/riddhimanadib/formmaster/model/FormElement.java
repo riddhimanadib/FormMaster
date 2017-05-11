@@ -28,12 +28,15 @@ public class FormElement implements FormObject {
     private String mValue; // value to be shown on right
     private List<String> mOptions; // list of options for single and multi picker
     private List<String> mOptionsSelected; // list of selected options for single and multi picker
+    private String mHint; // value to be shown if mValue is null
+    private boolean mRequired; // value to set is the field is required
 
     public FormElement() {
     }
 
     /**
      * static method to create instance
+     *
      * @return
      */
     public static FormElement createInstance() {
@@ -58,6 +61,16 @@ public class FormElement implements FormObject {
 
     public FormElement setValue(String mValue) {
         this.mValue = mValue;
+        return this;
+    }
+
+    public FormElement setHint(String mHint) {
+        this.mHint = mHint;
+        return this;
+    }
+
+    public FormElement setRequired(boolean required) {
+        this.mRequired = required;
         return this;
     }
 
@@ -87,6 +100,14 @@ public class FormElement implements FormObject {
         return (mValue == null) ? "" : mValue;
     }
 
+    public String getHint() {
+        return (mHint == null) ? "" : mHint;
+    }
+
+    public boolean isRequired() {
+        return mRequired;
+    }
+
     public List<String> getOptions() {
         return (mOptions == null) ? new ArrayList<String>() : mOptions;
     }
@@ -102,6 +123,6 @@ public class FormElement implements FormObject {
 
     @Override
     public String toString() {
-        return "TAG: " + String.valueOf(this.mTag) + ", TITLE: " + this.mTitle + ", VALUE: " + this.mValue ;
+        return "TAG: " + String.valueOf(this.mTag) + ", TITLE: " + this.mTitle + ", VALUE: " + this.mValue + ", REQUIRED: " + String.valueOf(this.mRequired);
     }
 }
