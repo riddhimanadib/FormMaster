@@ -15,15 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-
 import me.riddhimanadib.formmaster.R;
 import me.riddhimanadib.formmaster.model.FormElement;
 import me.riddhimanadib.formmaster.model.FormHeader;
@@ -197,23 +196,29 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             switch (getItemViewType(position)) {
                 case FormElement.TYPE_EDITTEXT_TEXT_SINGLELINE:
                     holder.mEditTextValue.setMaxLines(1);
+                    setEditTextFocusEnabled(holder);
                     break;
                 case FormElement.TYPE_EDITTEXT_TEXT_MULTILINE:
                     holder.mEditTextValue.setSingleLine(false);
                     holder.mEditTextValue.setMaxLines(4);
+                  setEditTextFocusEnabled(holder);
                     break;
                 case FormElement.TYPE_EDITTEXT_NUMBER:
                     holder.mEditTextValue.setRawInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+                    setEditTextFocusEnabled(holder);
                     break;
                 case FormElement.TYPE_EDITTEXT_EMAIL:
                     holder.mEditTextValue.setRawInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+                    setEditTextFocusEnabled(holder);
                     break;
                 case FormElement.TYPE_EDITTEXT_PHONE:
                     holder.mEditTextValue.setRawInputType(InputType.TYPE_CLASS_PHONE|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+                    setEditTextFocusEnabled(holder);
                     break;
                 case FormElement.TYPE_EDITTEXT_PASSWORD:
                     holder.mEditTextValue.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     holder.mEditTextValue.setSelection(holder.mEditTextValue.getText().length());
+                    setEditTextFocusEnabled(holder);
                     break;
                 case FormElement.TYPE_PICKER_DATE:
                     setDatePicker(holder, position);
@@ -232,6 +237,19 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             }
         }
 
+    }
+
+
+    private void setEditTextFocusEnabled(final ViewHolder holder){
+      holder.itemView.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          holder.mEditTextValue.requestFocus();
+          InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+          imm.showSoftInput(holder.mEditTextValue, InputMethodManager.SHOW_IMPLICIT);
+
+        }
+      });
     }
 
     /**
