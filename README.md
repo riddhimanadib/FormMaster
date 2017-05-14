@@ -79,10 +79,13 @@ FormHeader header = FormHeader.createInstance().setTitle("Personal Info");
 **General object format**
 ``` 'java'
 FormElement element = FormElement.createInstance()
+    .setTag(101123151) // optional tag to uniquely identify the elemnt for later use
     .setType(FormElement.TYPE_PICKER_MULTI_CHECKBOX) // setting input type
     .setTitle("Pick your favourite fruit") // setting title
     .setValue("Banana") // setting value of the field, if any
-    .setOptions(fruits); // setting pickable options, if any
+    .setOptions(fruits) // setting pickable options, if any
+    .setHint("e.g. banana, guava etc") // setting hints, if any
+    .setRequired(false); // marking if the form element is required to be filled to make the form valid, include if needed
 ```
 
 **Samples:**
@@ -142,6 +145,12 @@ Use the unique tag assigned earlier to retrieve value (See examples in this repo
 ``` 'java'
 FormElement targetElement = mFormBuilder.getFormElement(2149);
 String targetValue = targetElement.getValue();
+```
+
+### Check if form is valid
+Use this method if you need to check whether the required elements of the form is completed
+```'java'
+mFormBuilder.isValidForm(); // returns boolean whether the form is valid or not
 ```
 
 ### Form accent color change
