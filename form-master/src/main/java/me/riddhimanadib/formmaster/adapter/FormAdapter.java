@@ -13,6 +13,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -215,13 +216,13 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                     holder.mEditTextValue.setSelection(holder.mEditTextValue.getText().length());
                     break;
                 case FormElement.TYPE_PICKER_DATE:
-                    setDatePicker(holder.mEditTextValue, position);
+                    setDatePicker(holder, position);
                     break;
                 case FormElement.TYPE_PICKER_TIME:
-                    setTimePicker(holder.mEditTextValue, position);
+                    setTimePicker(holder, position);
                     break;
                 case FormElement.TYPE_SPINNER_DROPDOWN:
-                    setSingleOptionsDialog(holder.mEditTextValue, position);
+                    setSingleOptionsDialog(holder, position);
                     break;
                 case FormElement.TYPE_PICKER_MULTI_CHECKBOX:
                     setMultipleOptionsDialog(holder.mEditTextValue, position);
@@ -234,77 +235,103 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
     }
 
     /**
-     * prepares the datepicker for the clicked position and attaches click listener for the passed edittext
-     * @param editText
+     * prepares the datepicker for the clicked position and attaches click listener for the passed edittext and listener for the itemview
+     * @param holder
      * @param position
      */
-    private void setDatePicker(AppCompatEditText editText, final int position) {
+    private void setDatePicker(ViewHolder holder, final int position) {
 
-        editText.setFocusableInTouchMode(false);
-        editText.setOnClickListener(new View.OnClickListener() {
+        holder.mEditTextValue.setFocusableInTouchMode(false);
+        holder.mEditTextValue.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View v) {
                 // saves clicked position for further reference
-                clickedPosition = position;
-
-                // prepares date picker dialog
-                DatePickerDialog datePickerDialog = new DatePickerDialog(mContext,
-                        date,
-                        mCalendarCurrentDate.get(Calendar.YEAR),
-                        mCalendarCurrentDate.get(Calendar.MONTH),
-                        mCalendarCurrentDate.get(Calendar.DAY_OF_MONTH));
-
-                // this could be used to set a minimum date
-                // datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-
-                // display the picker
-                datePickerDialog.show();
+              showDatePickerDialog(position);
             }
         });
 
+        holder.itemView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // saves clicked position for further reference
+              showDatePickerDialog(position);
+            }
+        });
+
+    }
+
+  /**
+   * prepares the datepickerdialog for the clicked position and updates the clickedPosition
+   * @param position
+   */
+    private void showDatePickerDialog(int position){
+        clickedPosition = position;
+
+        // prepares date picker dialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(mContext,
+            date,
+            mCalendarCurrentDate.get(Calendar.YEAR),
+            mCalendarCurrentDate.get(Calendar.MONTH),
+            mCalendarCurrentDate.get(Calendar.DAY_OF_MONTH));
+
+        // this could be used to set a minimum date
+        // datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+        // display the picker
+        datePickerDialog.show();
     }
 
     /**
      * prepares the timepicker for the clicked position and attaches click listener for the passed edittext
-     * @param editText
+     * @param holder
      * @param position
      */
-    private void setTimePicker(AppCompatEditText editText, final int position) {
+    private void setTimePicker(ViewHolder holder, final int position) {
 
-        editText.setFocusableInTouchMode(false);
-        editText.setOnClickListener(new View.OnClickListener() {
+        holder.mEditTextValue.setFocusableInTouchMode(false);
+        holder.mEditTextValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // saves clicked position for further reference
-                clickedPosition = position;
-
-                // prepares time picker dialog
-                TimePickerDialog timePickerDialog = new TimePickerDialog(mContext,
-                        time,
-                        mCalendarCurrentDate.get(Calendar.HOUR),
-                        mCalendarCurrentDate.get(Calendar.MINUTE),
-                        false);
-
-                // display the picker
-                timePickerDialog.show();
+              showTimePicker(position);
             }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            showTimePicker(position);
+          }
         });
 
     }
 
+    private void showTimePicker(int position){
+
+      // saves clicked position for further reference
+      clickedPosition = position;
+
+      // prepares time picker dialog
+      TimePickerDialog timePickerDialog = new TimePickerDialog(mContext,
+          time,
+          mCalendarCurrentDate.get(Calendar.HOUR),
+          mCalendarCurrentDate.get(Calendar.MINUTE),
+          false);
+
+      // display the picker
+      timePickerDialog.show();
+    }
+
     /**
      * prepares a single picker dialog for the clicked position and attaches click listener for the passed edittext
-     * @param editText
+     * @param holder
      * @param position
      */
-    private void setSingleOptionsDialog(final AppCompatEditText editText, final int position) {
+    private void setSingleOptionsDialog(final ViewHolder holder, final int position) {
 
         // get the element
         final FormElement currentObj = (FormElement) mDataset.get(position);
 
-        editText.setFocusableInTouchMode(false);
+        holder.mEditTextValue.setFocusableInTouchMode(false);
 
         // reformat the options in format needed
         final CharSequence[] options = new CharSequence[currentObj.getOptions().size()];
@@ -317,7 +344,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                 .setTitle("Pick one")
                 .setItems(options, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        editText.setText(options[which]);
+                        holder.mEditTextValue.setText(options[which]);
                         currentObj.setValue(options[which].toString());
                         notifyDataSetChanged();
                     }
@@ -325,12 +352,19 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                 .create();
 
         // display the dialog on click
-        editText.setOnClickListener(new View.OnClickListener() {
+        holder.mEditTextValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.show();
             }
         });
+
+      holder.itemView.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          dialog.show();
+        }
+      });
 
     }
 
