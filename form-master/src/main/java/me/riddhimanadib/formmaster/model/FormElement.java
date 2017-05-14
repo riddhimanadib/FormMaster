@@ -2,6 +2,7 @@ package me.riddhimanadib.formmaster.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 
 /**
  * Created by Adib on 16-Apr-17.
@@ -30,6 +31,8 @@ public class FormElement implements FormObject {
     private List<String> mOptionsSelected; // list of selected options for single and multi picker
     private String mHint; // value to be shown if mValue is null
     private boolean mRequired; // value to set is the field is required
+    private OnFormElementValueChangedListener onFormElementValueChangedListener;
+    private int style;
 
     public FormElement() {
     }
@@ -125,4 +128,14 @@ public class FormElement implements FormObject {
     public String toString() {
         return "TAG: " + String.valueOf(this.mTag) + ", TITLE: " + this.mTitle + ", VALUE: " + this.mValue + ", REQUIRED: " + String.valueOf(this.mRequired);
     }
+
+
+  public OnFormElementValueChangedListener getOnFormElementValueChangedListener() {
+    return onFormElementValueChangedListener;
+  }
+
+  public void setOnFormElementValueChangedListener(
+      OnFormElementValueChangedListener onFormElementValueChangedListener) {
+    this.onFormElementValueChangedListener = onFormElementValueChangedListener;
+  }
 }

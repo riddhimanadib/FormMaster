@@ -481,17 +481,18 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             mEditTextValue = (AppCompatEditText) v.findViewById(R.id.formElementValue);
             mFormCustomEditTextListener = listener;
 
-            // attache generic text changed listener
-            if (mEditTextValue != null)
+              if (mEditTextValue != null)
                 mEditTextValue.addTextChangedListener(mFormCustomEditTextListener);
         }
     }
+
 
     /**
      * Text watcher for Edit texts
      */
     private class FormCustomEditTextListener implements TextWatcher {
         private int position;
+        private String newValue;
 
         public void updatePosition(int position) {
             this.position = position;
@@ -499,19 +500,27 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            // no op
+
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
             FormElement formElement = (FormElement) mDataset.get(position);
             formElement.setValue(charSequence.toString());
+            newValue = charSequence.toString();
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
-            // no op
+          FormElement formElement = (FormElement) mDataset.get(position);
+          if(formElement.getOnFormElementValueChangedListener()!= null) {
+            formElement.getOnFormElementValueChangedListener()
+                .onValueChanged(formElement, newValue);
+          }
+
         }
+
+
     }
 
     /**
