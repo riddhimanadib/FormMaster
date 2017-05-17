@@ -131,6 +131,21 @@ fruits.add("Guava");
 FormElement element = FormElement.createInstance().setType(FormElement.TYPE_PICKER_MULTI_CHECKBOX).setTitle("Multi Items").setOptions(fruits);
 ```
 
+### Set form element value change listener to get changed value instantly
+While creating new instance of FormBuildHelper, add a listener in the constructor
+
+Have a look at the example code for details
+
+``` 'java'
+FormBuildHelper mFormBuilder = new FormBuildHelper(this, mRecyclerView, new OnFormElementValueChangedListener() {
+    @Override
+    public void onValueChanged(FormElement formElement) {
+        // do anything here with formElement.getValue()
+    }
+}
+);
+```
+
 ### Set unique tags for form elements (for later value retrieval)
 Just add a unique tag for the element
 ``` 'java'
