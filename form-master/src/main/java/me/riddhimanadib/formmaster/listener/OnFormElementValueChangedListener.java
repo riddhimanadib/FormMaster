@@ -4,6 +4,6 @@ import me.riddhimanadib.formmaster.model.FormElement;
 
 public interface OnFormElementValueChangedListener {
 
-    public void onValueChanged(FormElement rowDescriptor, String newValue);
+    void onValueChanged(FormElement formElement);
 
 }

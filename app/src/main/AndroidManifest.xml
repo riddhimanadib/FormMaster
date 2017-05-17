@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".FullscreenFormActivity" />
         <activity android:name=".PartialScreenFormActivity" />
-        <activity android:name=".LoginFormActivity"></activity>
+        <activity android:name=".LoginFormActivity" />
+        <activity android:name=".FormListenerActivity"></activity>
     </application>
 
 </manifest>

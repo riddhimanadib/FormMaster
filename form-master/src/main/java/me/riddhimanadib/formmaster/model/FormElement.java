@@ -31,8 +31,6 @@ public class FormElement implements FormObject {
     private List<String> mOptionsSelected; // list of selected options for single and multi picker
     private String mHint; // value to be shown if mValue is null
     private boolean mRequired; // value to set is the field is required
-    private OnFormElementValueChangedListener onFormElementValueChangedListener;
-    private int style;
 
     public FormElement() {
     }
@@ -88,35 +86,35 @@ public class FormElement implements FormObject {
     }
 
     public int getTag() {
-        return mTag;
+        return this.mTag;
     }
 
     public int getType() {
-        return mType;
+        return this.mType;
     }
 
     public String getTitle() {
-        return mTitle;
+        return this.mTitle;
     }
 
     public String getValue() {
-        return (mValue == null) ? "" : mValue;
+        return (this.mValue == null) ? "" : this.mValue;
     }
 
     public String getHint() {
-        return (mHint == null) ? "" : mHint;
+        return (this.mHint == null) ? "" : this.mHint;
     }
 
     public boolean isRequired() {
-        return mRequired;
+        return this.mRequired;
     }
 
     public List<String> getOptions() {
-        return (mOptions == null) ? new ArrayList<String>() : mOptions;
+        return (this.mOptions == null) ? new ArrayList<String>() : this.mOptions;
     }
 
     public List<String> getOptionsSelected() {
-        return (mOptionsSelected == null) ? new ArrayList<String>() : mOptionsSelected;
+        return (this.mOptionsSelected == null) ? new ArrayList<String>() : this.mOptionsSelected;
     }
 
     @Override
@@ -129,13 +127,4 @@ public class FormElement implements FormObject {
         return "TAG: " + String.valueOf(this.mTag) + ", TITLE: " + this.mTitle + ", VALUE: " + this.mValue + ", REQUIRED: " + String.valueOf(this.mRequired);
     }
 
-
-  public OnFormElementValueChangedListener getOnFormElementValueChangedListener() {
-    return onFormElementValueChangedListener;
-  }
-
-  public void setOnFormElementValueChangedListener(
-      OnFormElementValueChangedListener onFormElementValueChangedListener) {
-    this.onFormElementValueChangedListener = onFormElementValueChangedListener;
-  }
 }

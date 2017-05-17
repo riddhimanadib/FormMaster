@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import me.riddhimanadib.formmaster.R;
+import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.FormElement;
 import me.riddhimanadib.formmaster.model.FormHeader;
 import me.riddhimanadib.formmaster.model.FormObject;
@@ -42,6 +43,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
     private Context mContext;
     private Calendar mCalendarCurrentDate;
     private Calendar mCalendarCurrentTime;
+    private OnFormElementValueChangedListener mListener;
 
     private int clickedPosition;
 
@@ -49,8 +51,9 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
      * public constructor with context
      * @param context
      */
-    public FormAdapter(Context context) {
+    public FormAdapter(Context context, OnFormElementValueChangedListener listener) {
         mContext = context;
+        mListener = listener;
         mDataset = new ArrayList<>();
         mCalendarCurrentDate = Calendar.getInstance();
         mCalendarCurrentTime = Calendar.getInstance();
@@ -230,7 +233,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                     setSingleOptionsDialog(holder, position);
                     break;
                 case FormElement.TYPE_PICKER_MULTI_CHECKBOX:
-                    setMultipleOptionsDialog(holder.mEditTextValue, position);
+                    setMultipleOptionsDialog(holder, position);
                     break;
                 default:
                     break;
@@ -239,17 +242,19 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     }
 
-
-    private void setEditTextFocusEnabled(final ViewHolder holder){
-      holder.itemView.setOnClickListener(new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          holder.mEditTextValue.requestFocus();
-          InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-          imm.showSoftInput(holder.mEditTextValue, InputMethodManager.SHOW_IMPLICIT);
-
-        }
-      });
+    /**
+     * brings focus when clicked on the whole container
+     * @param holder
+     */
+    private void setEditTextFocusEnabled(final ViewHolder holder) {
+        holder.itemView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            holder.mEditTextValue.requestFocus();
+            InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(holder.mEditTextValue, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
     }
 
     /**
@@ -278,11 +283,11 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     }
 
-  /**
-   * prepares the datepickerdialog for the clicked position and updates the clickedPosition
-   * @param position
-   */
-    private void showDatePickerDialog(int position){
+    /**
+     * prepares the date picker dialog for the clicked position and updates the clickedPosition
+     * @param position
+     */
+    private void showDatePickerDialog(int position) {
         clickedPosition = position;
 
         // prepares date picker dialog
@@ -307,14 +312,14 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
     private void setTimePicker(ViewHolder holder, final int position) {
 
         holder.mEditTextValue.setFocusableInTouchMode(false);
-        holder.mEditTextValue.setOnClickListener(new View.OnClickListener() {
+        holder.mEditTextValue.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
               showTimePicker(position);
             }
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new OnClickListener() {
           @Override
           public void onClick(View view) {
             showTimePicker(position);
@@ -323,7 +328,11 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     }
 
-    private void showTimePicker(int position){
+    /**
+     * prepares the time picker dialog for the clicked position and updates the clickedPosition
+     * @param position
+     */
+    private void showTimePicker(int position) {
 
       // saves clicked position for further reference
       clickedPosition = position;
@@ -370,33 +379,26 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                 .create();
 
         // display the dialog on click
-        holder.mEditTextValue.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.show();
             }
         });
 
-      holder.itemView.setOnClickListener(new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          dialog.show();
-        }
-      });
-
     }
 
     /**
      * prepares a multi checkbox picker dialog for the clicked position and attaches click listener for the passed edittext
-     * @param editText
+     * @param holder
      * @param position
      */
-    private void setMultipleOptionsDialog(final AppCompatEditText editText, final int position) {
+    private void setMultipleOptionsDialog(final ViewHolder holder, final int position) {
 
         // get the element
         final FormElement currentObj = (FormElement) mDataset.get(position);
 
-        editText.setFocusableInTouchMode(false);
+        holder.mEditTextValue.setFocusableInTouchMode(false);
 
         // reformat the options in format needed
         final CharSequence[] options = new CharSequence[currentObj.getOptions().size()];
@@ -442,7 +444,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                                 s += ", ";
                             }
                         }
-                        editText.setText(s);
+                        holder.mEditTextValue.setText(s);
                         ((FormElement) mDataset.get(position)).setValue(s);
                         notifyDataSetChanged();
                     }
@@ -456,7 +458,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                 .create();
 
         // display the dialog on click
-        editText.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.show();
@@ -481,18 +483,16 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             mEditTextValue = (AppCompatEditText) v.findViewById(R.id.formElementValue);
             mFormCustomEditTextListener = listener;
 
-              if (mEditTextValue != null)
+            if (mEditTextValue != null)
                 mEditTextValue.addTextChangedListener(mFormCustomEditTextListener);
         }
     }
-
 
     /**
      * Text watcher for Edit texts
      */
     private class FormCustomEditTextListener implements TextWatcher {
         private int position;
-        private String newValue;
 
         public void updatePosition(int position) {
             this.position = position;
@@ -505,22 +505,25 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+            // get current form element, existing value and new value
             FormElement formElement = (FormElement) mDataset.get(position);
-            formElement.setValue(charSequence.toString());
-            newValue = charSequence.toString();
+            String currentValue = formElement.getValue();
+            String newValue = charSequence.toString();
+
+            // trigger event only if the value is changed
+            if (!currentValue.equals(newValue)) {
+                formElement.setValue(newValue);
+                if (mListener != null)
+                    mListener.onValueChanged(formElement);
+            }
+
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
-          FormElement formElement = (FormElement) mDataset.get(position);
-          if(formElement.getOnFormElementValueChangedListener()!= null) {
-            formElement.getOnFormElementValueChangedListener()
-                .onValueChanged(formElement, newValue);
-          }
 
         }
-
-
     }
 
     /**
@@ -538,8 +541,18 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
             // act only if clicked position is a valid index
             if (clickedPosition >= 0) {
-                ((FormElement) mDataset.get(clickedPosition)).setValue(sdfDate.format(mCalendarCurrentDate.getTime()));
-                notifyDataSetChanged();
+                // get current form element, existing value and new value
+                FormElement formElement = (FormElement) mDataset.get(clickedPosition);
+                String currentValue = formElement.getValue();
+                String newValue = sdfDate.format(mCalendarCurrentDate.getTime());
+
+                // trigger event only if the value is changed
+                if (!currentValue.equals(newValue)) {
+                    formElement.setValue(newValue);
+                    notifyDataSetChanged();
+                    if (mListener != null)
+                        mListener.onValueChanged(formElement);
+                }
 
                 // change clicked position to default value
                 clickedPosition = -1;
@@ -562,8 +575,18 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
             // act only if clicked position is a valid index
             if (clickedPosition >= 0) {
-                ((FormElement) mDataset.get(clickedPosition)).setValue(sdfTime.format(mCalendarCurrentTime.getTime()));
-                notifyDataSetChanged();
+                // get current form element, existing value and new value
+                FormElement formElement = (FormElement) mDataset.get(clickedPosition);
+                String currentValue = formElement.getValue();
+                String newValue = sdfTime.format(mCalendarCurrentTime.getTime());
+
+                // trigger event only if the value is changed
+                if (!currentValue.equals(newValue)) {
+                    formElement.setValue(newValue);
+                    notifyDataSetChanged();
+                    if (mListener != null)
+                        mListener.onValueChanged(formElement);
+                }
 
                 // change clicked position to default value
                 clickedPosition = -1;

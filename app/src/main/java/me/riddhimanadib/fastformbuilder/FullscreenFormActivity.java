@@ -61,15 +61,6 @@ public class FullscreenFormActivity extends AppCompatActivity {
         FormHeader header1 = FormHeader.createInstance().setTitle("Personal Info");
         FormElement element11 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_EMAIL).setTitle("Email").setHint("Enter Email");
         FormElement element12 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_PHONE).setTitle("Phone").setValue("+8801712345678");
-        element11.setOnFormElementValueChangedListener(new OnFormElementValueChangedListener() {
-          @Override
-          public void onValueChanged(FormElement formElement, String newValue) {
-            Log.v("Changed value","N:"+newValue);
-
-            FormElement element11 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_EMAIL).setTitle("Added Row").setHint("Enter Row");
-
-          }
-        });
 
         FormHeader header2 = FormHeader.createInstance().setTitle("Family Info");
         FormElement element21 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_TEXT_SINGLELINE).setTitle("Location").setValue("Dhaka");

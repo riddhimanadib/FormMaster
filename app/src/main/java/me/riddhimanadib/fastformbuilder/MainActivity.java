@@ -31,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ((Button) findViewById(R.id.buttonFormListenerActivity)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, FormListenerActivity.class));
+            }
+        });
+
         ((Button) findViewById(R.id.buttonLoginActivity)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
