@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import me.riddhimanadib.formmaster.helper.FormBuildHelper;
+import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.FormElement;
 import me.riddhimanadib.formmaster.model.FormHeader;
 import me.riddhimanadib.formmaster.model.FormObject;
@@ -57,8 +59,17 @@ public class FullscreenFormActivity extends AppCompatActivity {
         mFormBuilder = new FormBuildHelper(this, mRecyclerView);
 
         FormHeader header1 = FormHeader.createInstance().setTitle("Personal Info");
-        FormElement element11 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_EMAIL).setTitle("Email");
+        FormElement element11 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_EMAIL).setTitle("Email").setHint("Enter Email");
         FormElement element12 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_PHONE).setTitle("Phone").setValue("+8801712345678");
+        element11.setOnFormElementValueChangedListener(new OnFormElementValueChangedListener() {
+          @Override
+          public void onValueChanged(FormElement formElement, String newValue) {
+            Log.v("Changed value","N:"+newValue);
+
+            FormElement element11 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_EMAIL).setTitle("Added Row").setHint("Enter Row");
+
+          }
+        });
 
         FormHeader header2 = FormHeader.createInstance().setTitle("Family Info");
         FormElement element21 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_TEXT_SINGLELINE).setTitle("Location").setValue("Dhaka");
