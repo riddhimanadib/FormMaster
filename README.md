@@ -17,7 +17,7 @@ This library aids in building bigger forms on-the-fly. Forms with large number o
 ## Installation
 Add this in your app's **build.gradle** file:
 ```
-compile 'me.riddhimanadib.form-master:form-master:1.0.1'
+compile 'me.riddhimanadib.form-master:form-master:1.0.2'
 ```
 
 
