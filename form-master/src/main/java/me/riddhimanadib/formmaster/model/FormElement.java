@@ -22,10 +22,6 @@ public class FormElement implements FormObject {
     public static final int TYPE_PICKER_MULTI_CHECKBOX = 9;
     public static final int TYPE_EDITTEXT_PASSWORD = 10;
 
-    public static final int DATEPICKER_ORGINAL = 1;
-    public static final int DATEPICKER_TH = 0;
-    public static final int THEME1 = 1;
-
     // private variables
     private int mTag; // unique tag to identify the object
     private int mType; // type for the form element
@@ -38,9 +34,6 @@ public class FormElement implements FormObject {
 
     public static String DropDown_Title; // title to be shown on alertdialog
     public static String Checkbox_Title; // title to be shown on alertdialog
-    public static String DatePickerTitle; // title to be shown on datepicker
-    public static int dType; // type for the datepicker element
-    public static int Theme1; // datepicker theme
 
     public FormElement() {
     }
@@ -104,22 +97,6 @@ public class FormElement implements FormObject {
         this.Checkbox_Title = Checkbox_Title;
         return this;
     }
-
-    public FormElement setDatePickerType(int dType) {
-        this.dType = dType;
-        return this;
-    }
-
-    public FormElement setDatePickerTheme(int Theme1) {
-        this.Theme1 = Theme1;
-        return this;
-    }
-
-    public FormElement setDatePickerTitle(String DatePickerTitle) {
-        this.DatePickerTitle = DatePickerTitle;
-        return this;
-    }
-
 
     public int getTag() {
         return this.mTag;

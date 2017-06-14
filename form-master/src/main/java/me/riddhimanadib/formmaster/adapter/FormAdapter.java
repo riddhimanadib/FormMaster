@@ -36,16 +36,12 @@ import me.riddhimanadib.formmaster.model.FormElement;
 import me.riddhimanadib.formmaster.model.FormHeader;
 import me.riddhimanadib.formmaster.model.FormObject;
 
-import com.layernet.thaidatetimepicker.time.RadialPickerLayout;
-
 /**
  * The adpater the holds and displays the form objects
  * Created by Adib on 16-Apr-17.
  */
 
-public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> implements
-        com.layernet.thaidatetimepicker.time.TimePickerDialog.OnTimeSetListener,
-        com.layernet.thaidatetimepicker.date.DatePickerDialog.OnDateSetListener{
+public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder>{
 
     // defining marker for header view
     private int IS_HEADER_VIEW = 0;
@@ -70,7 +66,6 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> im
         mCalendarCurrentDate = Calendar.getInstance();
         mCalendarCurrentTime = Calendar.getInstance();
         clickedPosition = -1;
-        formelement = new FormElement();
     }
 
     /**
@@ -237,7 +232,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> im
                     setEditTextFocusEnabled(holder);
                     break;
                 case FormElement.TYPE_PICKER_DATE:
-                    setDatePicker(holder, position, formelement.dType);
+                    setDatePicker(holder, position);
                     break;
                 case FormElement.TYPE_PICKER_TIME:
                     setTimePicker(holder, position);
@@ -275,14 +270,14 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> im
      * @param holder
      * @param position
      */
-    private void setDatePicker(ViewHolder holder, final int position, final int type) {
+    private void setDatePicker(ViewHolder holder, final int position) {
 
         holder.mEditTextValue.setFocusableInTouchMode(false);
         holder.mEditTextValue.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // saves clicked position for further reference
-              showDatePickerDialog(position,type);
+              showDatePickerDialog(position);
             }
         });
 
@@ -290,7 +285,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> im
             @Override
             public void onClick(View v) {
                 // saves clicked position for further reference
-              showDatePickerDialog(position,type);
+              showDatePickerDialog(position);
             }
         });
 
@@ -300,39 +295,20 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> im
      * prepares the date picker dialog for the clicked position and updates the clickedPosition
      * @param position
      */
-    private void showDatePickerDialog(int position,int type) {
+    private void showDatePickerDialog(int position) {
         clickedPosition = position;
-        if(type == 0){ // Custom DatePicker
-            FormElement formelement = new FormElement();
-            FragmentManager manager = ((AppCompatActivity)mContext).getFragmentManager();
-            com.layernet.thaidatetimepicker.date.DatePickerDialog datepicker_dialog =
-                    com.layernet.thaidatetimepicker.date.DatePickerDialog.newInstance(
-                            this,
-                            mCalendarCurrentDate.get(Calendar.YEAR),
-                            mCalendarCurrentDate.get(Calendar.MONTH),
-                            mCalendarCurrentDate.get(Calendar.DAY_OF_MONTH)
-                    );
-                if(formelement.Theme1 == 1){
-                   datepicker_dialog.setAccentColor(Color.parseColor("#9C27B0"));
-                }
-                if(formelement.DatePickerTitle != null){
-                    datepicker_dialog.setTitle(FormElement.DatePickerTitle);
-                }
-            datepicker_dialog.show(manager, "Datepickerdialog");
-        }else{ // Original DatePicker
-            //  Prepares date picker dialog
-            DatePickerDialog datePickerDialog = new DatePickerDialog(mContext,
+        //  Prepares date picker dialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(mContext,
                 date,
                 mCalendarCurrentDate.get(Calendar.YEAR),
                 mCalendarCurrentDate.get(Calendar.MONTH),
                 mCalendarCurrentDate.get(Calendar.DAY_OF_MONTH));
 
-            // this could be used to set a minimum date
-            // datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        // this could be used to set a minimum date
+        // datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
-            // display the picker
-            datePickerDialog.show();
-        }
+        // display the picker
+        datePickerDialog.show();
 
     }
 
@@ -500,47 +476,6 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> im
 
 
 
-    @Override
-    public void onDateSet(
-            com.layernet.thaidatetimepicker.date.DatePickerDialog view, int year, int monthOfYear, int dayOfMonth){
-        mCalendarCurrentDate.set(Calendar.YEAR, get_Thai_Year(year));
-        mCalendarCurrentDate.set(Calendar.MONTH, monthOfYear);
-        mCalendarCurrentDate.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-        DateFormat deshario_format1 = DateFormat.getDateInstance(DateFormat.MEDIUM, new Locale("TH")); // DATE
-        SimpleDateFormat deshario_format2 = new SimpleDateFormat("dd-MM-yyyy", new Locale("TH"));
-        //System.out.println("Date1 : "+deshario_format1.format(mCalendarCurrentDate.getTime())); //14 มิ.ย. 2560
-        //System.out.println("Date2 : "+deshario_format2.format(mCalendarCurrentDate.getTime())); //11-06-2560
-
-
-        // act only if clicked position is a valid index
-        if (clickedPosition >= 0) {
-            // get current form element, existing value and new value
-            FormElement formElement = (FormElement) mDataset.get(clickedPosition);
-            String currentValue = formElement.getValue();
-            String newValue = deshario_format1.format(mCalendarCurrentDate.getTime());
-
-            // trigger event only if the value is changed
-            if (!currentValue.equals(newValue)) {
-                formElement.setValue(newValue);
-                notifyDataSetChanged();
-                if (mListener != null)
-                    mListener.onValueChanged(formElement);
-            }
-
-            // change clicked position to default value
-            clickedPosition = -1;
-        }
-        mCalendarCurrentDate.set(Calendar.YEAR, (year));
-    }
-
-    @Override
-    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-
-    }
-
-    public int get_Thai_Year(int en_year){
-        return en_year+543;
-    }
 
     /**
      * View holder class

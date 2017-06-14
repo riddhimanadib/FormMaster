@@ -66,9 +66,6 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
 
         FormElement element31 = FormElement.createInstance()
                 .setType(FormElement.TYPE_PICKER_DATE)
-                .setDatePickerType(FormElement.DATEPICKER_TH)
-                .setDatePickerTheme(FormElement.THEME1)
-                .setDatePickerTitle("Title")
                 .setTitle("Date");
 
         FormElement element32 = FormElement.createInstance().setType(FormElement.TYPE_PICKER_TIME).setTitle("Time");
