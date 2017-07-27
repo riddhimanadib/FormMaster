@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 
 import java.util.List;
 
@@ -93,7 +94,7 @@ public class FormBuildHelper {
     public boolean isValidForm() {
         for (int i = 0; i < this.mFormAdapter.getItemCount(); i++) {
             FormElement formElement = this.mFormAdapter.getValueAtIndex(i);
-            if (formElement.isRequired() & formElement.getValue() == null) {
+            if (formElement.isRequired() && TextUtils.isEmpty(formElement.getValue())) {
                 return false;
             }
         }
