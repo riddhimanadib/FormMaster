@@ -16,7 +16,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatTextView
@@ -26,6 +25,7 @@
             android:id="@+id/formElementTitle"
             tools:text="Personal Info"
             android:textSize="@dimen/elementTextTitleSize"
+            android:padding="16dp"
             android:textColor="@color/colorFormMasterElementTextTitle"/>
 
         <android.support.v7.widget.AppCompatEditText
@@ -40,6 +40,7 @@
             android:maxLines="1"
             tools:text="Riddhiman Adib"
             android:imeOptions="actionNext"
+            android:padding="16dp"
             android:textColor="@color/colorFormMasterElementTextValue"/>
 
     </LinearLayout>

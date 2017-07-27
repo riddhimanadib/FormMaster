@@ -18,11 +18,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
 import me.riddhimanadib.formmaster.R;
 import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.FormElement;
@@ -34,7 +36,7 @@ import me.riddhimanadib.formmaster.model.FormObject;
  * Created by Adib on 16-Apr-17.
  */
 
-public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
+public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder> {
 
     // defining marker for header view
     private int IS_HEADER_VIEW = 0;
@@ -161,13 +163,13 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
      * @return
      */
     @Override
-    public FormAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FormViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         // get layout based on header or element type
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View v = inflater.inflate((viewType == IS_HEADER_VIEW) ? R.layout.form_element_header : R.layout.form_element, parent, false);
 
-        ViewHolder vh = new ViewHolder(v, new FormCustomEditTextListener());
+        FormViewHolder vh = new FormViewHolder(v, new FormCustomEditTextListener());
         return vh;
     }
 
@@ -177,7 +179,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
      * @param position
      */
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(FormViewHolder holder, final int position) {
 
         // updates edit text listener index
         holder.mFormCustomEditTextListener.updatePosition(holder.getAdapterPosition());
@@ -246,7 +248,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
      * brings focus when clicked on the whole container
      * @param holder
      */
-    private void setEditTextFocusEnabled(final ViewHolder holder) {
+    private void setEditTextFocusEnabled(final FormViewHolder holder) {
         holder.itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -262,7 +264,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
      * @param holder
      * @param position
      */
-    private void setDatePicker(ViewHolder holder, final int position) {
+    private void setDatePicker(FormViewHolder holder, final int position) {
 
         holder.mEditTextValue.setFocusableInTouchMode(false);
         holder.mEditTextValue.setOnClickListener(new OnClickListener() {
@@ -273,7 +275,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             }
         });
 
-        holder.itemView.setOnClickListener(new OnClickListener() {
+        holder.mTextViewTitle.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // saves clicked position for further reference
@@ -309,7 +311,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
      * @param holder
      * @param position
      */
-    private void setTimePicker(ViewHolder holder, final int position) {
+    private void setTimePicker(FormViewHolder holder, final int position) {
 
         holder.mEditTextValue.setFocusableInTouchMode(false);
         holder.mEditTextValue.setOnClickListener(new OnClickListener() {
@@ -319,7 +321,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             }
         });
 
-        holder.itemView.setOnClickListener(new OnClickListener() {
+        holder.mTextViewTitle.setOnClickListener(new OnClickListener() {
           @Override
           public void onClick(View view) {
             showTimePicker(position);
@@ -353,12 +355,10 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
      * @param holder
      * @param position
      */
-    private void setSingleOptionsDialog(final ViewHolder holder, final int position) {
+    private void setSingleOptionsDialog(final FormViewHolder holder, final int position) {
 
         // get the element
         final FormElement currentObj = (FormElement) mDataset.get(position);
-
-        holder.mEditTextValue.setFocusableInTouchMode(false);
 
         // reformat the options in format needed
         final CharSequence[] options = new CharSequence[currentObj.getOptions().size()];
@@ -378,8 +378,15 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                 })
                 .create();
 
-        // display the dialog on click
-        holder.itemView.setOnClickListener(new OnClickListener() {
+        holder.mEditTextValue.setFocusableInTouchMode(false);
+        holder.mEditTextValue.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.show();
+            }
+        });
+
+        holder.mTextViewTitle.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.show();
@@ -393,12 +400,10 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
      * @param holder
      * @param position
      */
-    private void setMultipleOptionsDialog(final ViewHolder holder, final int position) {
+    private void setMultipleOptionsDialog(final FormViewHolder holder, final int position) {
 
         // get the element
         final FormElement currentObj = (FormElement) mDataset.get(position);
-
-        holder.mEditTextValue.setFocusableInTouchMode(false);
 
         // reformat the options in format needed
         final CharSequence[] options = new CharSequence[currentObj.getOptions().size()];
@@ -457,8 +462,15 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                 })
                 .create();
 
-        // display the dialog on click
-        holder.itemView.setOnClickListener(new OnClickListener() {
+        holder.mEditTextValue.setFocusableInTouchMode(false);
+        holder.mEditTextValue.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.show();
+            }
+        });
+
+        holder.mTextViewTitle.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.show();
@@ -469,17 +481,15 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
     /**
      * View holder class
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class FormViewHolder extends RecyclerView.ViewHolder {
 
         public AppCompatTextView mTextViewTitle;
-        public AppCompatTextView mTextViewOptions;
         public AppCompatEditText mEditTextValue;
         public FormCustomEditTextListener mFormCustomEditTextListener;
 
-        public ViewHolder(View v, FormCustomEditTextListener listener) {
+        public FormViewHolder(View v, FormCustomEditTextListener listener) {
             super(v);
             mTextViewTitle = (AppCompatTextView) v.findViewById(R.id.formElementTitle);
-            mTextViewOptions = (AppCompatTextView) v.findViewById(R.id.formElementTitle);
             mEditTextValue = (AppCompatEditText) v.findViewById(R.id.formElementValue);
             mFormCustomEditTextListener = listener;
 
