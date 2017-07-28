@@ -10,8 +10,7 @@ import java.util.List;
 
 import me.riddhimanadib.formmaster.adapter.FormAdapter;
 import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
-import me.riddhimanadib.formmaster.model.FormElement;
-import me.riddhimanadib.formmaster.model.FormObject;
+import me.riddhimanadib.formmaster.model.BaseFormElement;
 
 /** Wrapper class around the adapter to assist in building form
  * Created by Adib on 16-Apr-17.
@@ -63,10 +62,10 @@ public class FormBuildHelper {
 
     /**
      * add list of form elements to be shown
-     * @param formElements
+     * @param baseFormElements
      */
-    public void addFormElements(List<FormObject> formElements) {
-        this.mFormAdapter.addElements(formElements);
+    public void addFormElements(List<BaseFormElement> baseFormElements) {
+        this.mFormAdapter.addElements(baseFormElements);
     }
 
     /**
@@ -81,7 +80,7 @@ public class FormBuildHelper {
      * @param tag
      * @return
      */
-    public FormElement getFormElement(int tag) {
+    public BaseFormElement getFormElement(int tag) {
         return this.mFormAdapter.getValueAtTag(tag);
     }
 
@@ -93,8 +92,8 @@ public class FormBuildHelper {
      */
     public boolean isValidForm() {
         for (int i = 0; i < this.mFormAdapter.getItemCount(); i++) {
-            FormElement formElement = this.mFormAdapter.getValueAtIndex(i);
-            if (formElement.isRequired() && TextUtils.isEmpty(formElement.getValue())) {
+            BaseFormElement baseFormElement = this.mFormAdapter.getValueAtIndex(i);
+            if (baseFormElement.isRequired() && TextUtils.isEmpty(baseFormElement.getValue())) {
                 return false;
             }
         }

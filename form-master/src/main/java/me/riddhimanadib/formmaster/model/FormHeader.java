@@ -5,37 +5,20 @@ package me.riddhimanadib.formmaster.model;
  * Created by Adib on 18-Apr-17.
  */
 
-public class FormHeader implements FormObject {
-
-    private String mTitle;
+public class FormHeader extends BaseFormElement {
 
     public FormHeader() {
     }
 
     /**
-     * static method to create instance
-     * @return
-     */
-    public static FormHeader createInstance() {
-        return new FormHeader();
-    }
-
-    /**
-     * sets the title, returns itself
+     * static method to create instance with title
      * @param title
      * @return
      */
-    public FormHeader setTitle(String title) {
-        this.mTitle = title;
-        return this;
-    }
-
-    /**
-     * returns the title
-     * @return
-     */
-    public String getTitle() {
-        return this.mTitle;
+    public static FormHeader createInstance(String title) {
+        FormHeader formHeader = new FormHeader();
+        formHeader.setTitle(title);
+        return formHeader;
     }
 
     @Override
@@ -43,8 +26,4 @@ public class FormHeader implements FormObject {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return this.mTitle;
-    }
 }

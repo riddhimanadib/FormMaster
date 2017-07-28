@@ -4,17 +4,24 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import me.riddhimanadib.formmaster.helper.FormBuildHelper;
-import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
-import me.riddhimanadib.formmaster.model.FormElement;
+import me.riddhimanadib.formmaster.model.BaseFormElement;
+import me.riddhimanadib.formmaster.model.FormElementPickerDate;
+import me.riddhimanadib.formmaster.model.FormElementPickerMulti;
+import me.riddhimanadib.formmaster.model.FormElementPickerSingle;
+import me.riddhimanadib.formmaster.model.FormElementPickerTime;
+import me.riddhimanadib.formmaster.model.FormElementTextEmail;
+import me.riddhimanadib.formmaster.model.FormElementTextMultiLine;
+import me.riddhimanadib.formmaster.model.FormElementTextNumber;
+import me.riddhimanadib.formmaster.model.FormElementTextPassword;
+import me.riddhimanadib.formmaster.model.FormElementTextPhone;
+import me.riddhimanadib.formmaster.model.FormElementTextSingleLine;
 import me.riddhimanadib.formmaster.model.FormHeader;
-import me.riddhimanadib.formmaster.model.FormObject;
 
 public class FullscreenFormActivity extends AppCompatActivity {
 
@@ -58,31 +65,30 @@ public class FullscreenFormActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mFormBuilder = new FormBuildHelper(this, mRecyclerView);
 
-        FormHeader header1 = FormHeader.createInstance().setTitle("Personal Info");
-        FormElement element11 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_EMAIL).setTitle("Email").setHint("Enter Email");
-        FormElement element12 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_PHONE).setTitle("Phone").setValue("+8801712345678");
+        FormHeader header1 = FormHeader.createInstance("Personal Info");
+        FormElementTextEmail element11 = FormElementTextEmail.createInstance().setTitle("Email").setHint("Enter Email");
+        FormElementTextPhone element12 = FormElementTextPhone.createInstance().setTitle("Phone").setValue("+8801712345678");
 
-        FormHeader header2 = FormHeader.createInstance().setTitle("Family Info");
-        FormElement element21 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_TEXT_SINGLELINE).setTitle("Location").setValue("Dhaka");
-        FormElement element22 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_TEXT_MULTILINE).setTitle("Address");
-        FormElement element23 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_NUMBER).setTitle("Zip Code").setValue("1000");
+        FormHeader header2 = FormHeader.createInstance("Family Info");
+        FormElementTextSingleLine element21 = FormElementTextSingleLine.createInstance().setTitle("Location").setValue("Dhaka");
+        FormElementTextMultiLine element22 = FormElementTextMultiLine.createInstance().setTitle("Address");
+        FormElementTextNumber element23 = FormElementTextNumber.createInstance().setTitle("Zip Code").setValue("1000");
 
-        FormHeader header3 = FormHeader.createInstance().setTitle("Schedule");
-        FormElement element31 = FormElement.createInstance().setType(FormElement.TYPE_PICKER_DATE).setTitle("Date");
-        FormElement element32 = FormElement.createInstance().setType(FormElement.TYPE_PICKER_TIME).setTitle("Time");
-        FormElement element33 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_PASSWORD).setTitle("Password").setValue("abcd1234");
+        FormHeader header3 = FormHeader.createInstance("Schedule");
+        FormElementPickerDate element31 = FormElementPickerDate.createInstance().setTitle("Date");
+        FormElementPickerTime element32 = FormElementPickerTime.createInstance().setTitle("Time");
+        FormElementTextPassword element33 = FormElementTextPassword.createInstance().setTitle("Password").setValue("abcd1234");
 
-        FormHeader header4 = FormHeader.createInstance().setTitle("Preferred Items");
+        FormHeader header4 = FormHeader.createInstance("Preferred Items");
         List<String> fruits = new ArrayList<>();
         fruits.add("Banana");
         fruits.add("Orange");
         fruits.add("Mango");
         fruits.add("Guava");
-        FormElement element41 = FormElement.createInstance().setType(FormElement.TYPE_SPINNER_DROPDOWN).setTitle("Single Item").setOptions(fruits);
-        FormElement element42 = FormElement.createInstance().setType(FormElement.TYPE_PICKER_MULTI_CHECKBOX).setTitle("Multi Items").setOptions(fruits);
+        FormElementPickerSingle element41 = FormElementPickerSingle.createInstance().setTitle("Single Item").setOptions(fruits);
+        FormElementPickerMulti element42 = FormElementPickerMulti.createInstance().setTitle("Multi Items").setOptions(fruits);
 
-
-        List<FormObject> formItems = new ArrayList<>();
+        List<BaseFormElement> formItems = new ArrayList<>();
         formItems.add(header1);
         formItems.add(element11);
         formItems.add(element12);

@@ -27,9 +27,10 @@ import java.util.Locale;
 
 import me.riddhimanadib.formmaster.R;
 import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
-import me.riddhimanadib.formmaster.model.FormElement;
+import me.riddhimanadib.formmaster.model.BaseFormElement;
+import me.riddhimanadib.formmaster.model.FormElementPickerMulti;
+import me.riddhimanadib.formmaster.model.FormElementPickerSingle;
 import me.riddhimanadib.formmaster.model.FormHeader;
-import me.riddhimanadib.formmaster.model.FormObject;
 
 /**
  * The adpater the holds and displays the form objects
@@ -41,7 +42,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
     // defining marker for header view
     private int IS_HEADER_VIEW = 0;
 
-    private List<FormObject> mDataset;
+    private List<BaseFormElement> mDataset;
     private Context mContext;
     private Calendar mCalendarCurrentDate;
     private Calendar mCalendarCurrentTime;
@@ -66,7 +67,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
      * adds list of elements to be shown
      * @param formObjects
      */
-    public void addElements(List<FormObject> formObjects) {
+    public void addElements(List<BaseFormElement> formObjects) {
         this.mDataset = formObjects;
     }
 
@@ -74,7 +75,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
      * adds single element to be shown
      * @param formObject
      */
-    public void addElement(FormObject formObject) {
+    public void addElement(BaseFormElement formObject) {
         this.mDataset.add(formObject);
     }
 
@@ -84,8 +85,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
      * @param value
      */
     public void setValueAtIndex(int position, String value) {
-        FormElement formElement = (FormElement) mDataset.get(position);
-        formElement.setValue(value);
+        BaseFormElement baseFormElement = mDataset.get(position);
+        baseFormElement.setValue(value);
     }
 
     /**
@@ -95,13 +96,10 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
      */
     public void setValueAtTag(int tag, String value) {
 
-        for (FormObject f : this.mDataset) {
-            if (f instanceof FormElement) {
-                FormElement formElement = (FormElement) f;
-                if (formElement.getTag() == tag) {
-                    formElement.setValue(value);
-                    return;
-                }
+        for (BaseFormElement f : this.mDataset) {
+            if (f.getTag() == tag) {
+                f.setValue(value);
+                return;
             }
         }
     }
@@ -111,8 +109,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
      * @param index
      * @return
      */
-    public FormElement getValueAtIndex(int index) {
-        return ((FormElement) mDataset.get(index));
+    public BaseFormElement getValueAtIndex(int index) {
+        return (mDataset.get(index));
     }
 
     /**
@@ -120,13 +118,10 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
      * @param tag
      * @return
      */
-    public FormElement getValueAtTag(int tag) {
-        for (FormObject f : this.mDataset) {
-            if (f instanceof FormElement) {
-                FormElement formElement = (FormElement) f;
-                if (formElement.getTag() == tag) {
-                    return formElement;
-                }
+    public BaseFormElement getValueAtTag(int tag) {
+        for (BaseFormElement f : this.mDataset) {
+            if (f.getTag() == tag) {
+                return f;
             }
         }
 
@@ -152,7 +147,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
         if (mDataset.get(position).isHeader()) {
             return IS_HEADER_VIEW;
         } else {
-            return ((FormElement) mDataset.get(position)).getType();
+            return (mDataset.get(position)).getType();
         }
     }
 
@@ -185,7 +180,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
         holder.mFormCustomEditTextListener.updatePosition(holder.getAdapterPosition());
 
         // gets current object
-        FormObject currentObject = mDataset.get(position);
+        BaseFormElement currentObject = mDataset.get(position);
 
         // shows header view if it's a header
         if (getItemViewType(position) == IS_HEADER_VIEW) {
@@ -193,48 +188,48 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
             holder.mTextViewTitle.setText(formHeader.getTitle());
         } else {
             // other wise, it just displays form element with respective type
-            FormElement formElement = (FormElement) currentObject;
-            holder.mTextViewTitle.setText(formElement.getTitle());
-            holder.mEditTextValue.setText(formElement.getValue());
-            holder.mEditTextValue.setHint(formElement.getHint());
+            BaseFormElement baseFormElement = currentObject;
+            holder.mTextViewTitle.setText(baseFormElement.getTitle());
+            holder.mEditTextValue.setText(baseFormElement.getValue());
+            holder.mEditTextValue.setHint(baseFormElement.getHint());
 
             switch (getItemViewType(position)) {
-                case FormElement.TYPE_EDITTEXT_TEXT_SINGLELINE:
+                case BaseFormElement.TYPE_EDITTEXT_TEXT_SINGLELINE:
                     holder.mEditTextValue.setMaxLines(1);
                     setEditTextFocusEnabled(holder);
                     break;
-                case FormElement.TYPE_EDITTEXT_TEXT_MULTILINE:
+                case BaseFormElement.TYPE_EDITTEXT_TEXT_MULTILINE:
                     holder.mEditTextValue.setSingleLine(false);
                     holder.mEditTextValue.setMaxLines(4);
                   setEditTextFocusEnabled(holder);
                     break;
-                case FormElement.TYPE_EDITTEXT_NUMBER:
+                case BaseFormElement.TYPE_EDITTEXT_NUMBER:
                     holder.mEditTextValue.setRawInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
                     setEditTextFocusEnabled(holder);
                     break;
-                case FormElement.TYPE_EDITTEXT_EMAIL:
+                case BaseFormElement.TYPE_EDITTEXT_EMAIL:
                     holder.mEditTextValue.setRawInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
                     setEditTextFocusEnabled(holder);
                     break;
-                case FormElement.TYPE_EDITTEXT_PHONE:
+                case BaseFormElement.TYPE_EDITTEXT_PHONE:
                     holder.mEditTextValue.setRawInputType(InputType.TYPE_CLASS_PHONE|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
                     setEditTextFocusEnabled(holder);
                     break;
-                case FormElement.TYPE_EDITTEXT_PASSWORD:
+                case BaseFormElement.TYPE_EDITTEXT_PASSWORD:
                     holder.mEditTextValue.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     holder.mEditTextValue.setSelection(holder.mEditTextValue.getText().length());
                     setEditTextFocusEnabled(holder);
                     break;
-                case FormElement.TYPE_PICKER_DATE:
+                case BaseFormElement.TYPE_PICKER_DATE:
                     setDatePicker(holder, position);
                     break;
-                case FormElement.TYPE_PICKER_TIME:
+                case BaseFormElement.TYPE_PICKER_TIME:
                     setTimePicker(holder, position);
                     break;
-                case FormElement.TYPE_SPINNER_DROPDOWN:
+                case BaseFormElement.TYPE_PICKER_SINGLE:
                     setSingleOptionsDialog(holder, position);
                     break;
-                case FormElement.TYPE_PICKER_MULTI_CHECKBOX:
+                case BaseFormElement.TYPE_PICKER_MULTI:
                     setMultipleOptionsDialog(holder, position);
                     break;
                 default:
@@ -358,7 +353,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
     private void setSingleOptionsDialog(final FormViewHolder holder, final int position) {
 
         // get the element
-        final FormElement currentObj = (FormElement) mDataset.get(position);
+        final FormElementPickerSingle currentObj = (FormElementPickerSingle) mDataset.get(position);
 
         // reformat the options in format needed
         final CharSequence[] options = new CharSequence[currentObj.getOptions().size()];
@@ -368,7 +363,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
 
         // prepare the dialog
         final AlertDialog dialog = new AlertDialog.Builder(mContext)
-                .setTitle("Pick one")
+                .setTitle(currentObj.getPickerTitle())
                 .setItems(options, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         holder.mEditTextValue.setText(options[which]);
@@ -403,7 +398,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
     private void setMultipleOptionsDialog(final FormViewHolder holder, final int position) {
 
         // get the element
-        final FormElement currentObj = (FormElement) mDataset.get(position);
+        final FormElementPickerMulti currentObj = (FormElementPickerMulti) mDataset.get(position);
 
         // reformat the options in format needed
         final CharSequence[] options = new CharSequence[currentObj.getOptions().size()];
@@ -450,7 +445,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
                             }
                         }
                         holder.mEditTextValue.setText(s);
-                        ((FormElement) mDataset.get(position)).setValue(s);
+                        mDataset.get(position).setValue(s);
                         notifyDataSetChanged();
                     }
                 })
@@ -517,15 +512,15 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
             // get current form element, existing value and new value
-            FormElement formElement = (FormElement) mDataset.get(position);
-            String currentValue = formElement.getValue();
+            BaseFormElement baseFormElement = mDataset.get(position);
+            String currentValue = baseFormElement.getValue();
             String newValue = charSequence.toString();
 
             // trigger event only if the value is changed
             if (!currentValue.equals(newValue)) {
-                formElement.setValue(newValue);
+                baseFormElement.setValue(newValue);
                 if (mListener != null)
-                    mListener.onValueChanged(formElement);
+                    mListener.onValueChanged(baseFormElement);
             }
 
         }
@@ -552,16 +547,16 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
             // act only if clicked position is a valid index
             if (clickedPosition >= 0) {
                 // get current form element, existing value and new value
-                FormElement formElement = (FormElement) mDataset.get(clickedPosition);
-                String currentValue = formElement.getValue();
+                BaseFormElement baseFormElement = mDataset.get(clickedPosition);
+                String currentValue = baseFormElement.getValue();
                 String newValue = sdfDate.format(mCalendarCurrentDate.getTime());
 
                 // trigger event only if the value is changed
                 if (!currentValue.equals(newValue)) {
-                    formElement.setValue(newValue);
+                    baseFormElement.setValue(newValue);
                     notifyDataSetChanged();
                     if (mListener != null)
-                        mListener.onValueChanged(formElement);
+                        mListener.onValueChanged(baseFormElement);
                 }
 
                 // change clicked position to default value
@@ -586,16 +581,16 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormViewHolder
             // act only if clicked position is a valid index
             if (clickedPosition >= 0) {
                 // get current form element, existing value and new value
-                FormElement formElement = (FormElement) mDataset.get(clickedPosition);
-                String currentValue = formElement.getValue();
+                BaseFormElement baseFormElement = mDataset.get(clickedPosition);
+                String currentValue = baseFormElement.getValue();
                 String newValue = sdfTime.format(mCalendarCurrentTime.getTime());
 
                 // trigger event only if the value is changed
                 if (!currentValue.equals(newValue)) {
-                    formElement.setValue(newValue);
+                    baseFormElement.setValue(newValue);
                     notifyDataSetChanged();
                     if (mListener != null)
-                        mListener.onValueChanged(formElement);
+                        mListener.onValueChanged(baseFormElement);
                 }
 
                 // change clicked position to default value
