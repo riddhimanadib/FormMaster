@@ -1,8 +1,8 @@
 package me.riddhimanadib.fastformbuilder;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.riddhimanadib.formmaster.helper.FormBuildHelper;
-import me.riddhimanadib.formmaster.model.FormElement;
-import me.riddhimanadib.formmaster.model.FormObject;
+import me.riddhimanadib.formmaster.model.BaseFormElement;
+import me.riddhimanadib.formmaster.model.FormElementTextEmail;
+import me.riddhimanadib.formmaster.model.FormElementTextPassword;
 
 public class LoginFormActivity extends AppCompatActivity {
 
@@ -33,12 +34,16 @@ public class LoginFormActivity extends AppCompatActivity {
 
         setupForm();
 
-        ((Button) findViewById(R.id.buttonLogin)).setOnClickListener(new View.OnClickListener() {
+        (findViewById(R.id.buttonLogin)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FormElement loginElement = mFormBuilder.getFormElement(TAG_EMAIL);
-                FormElement passwordElement = mFormBuilder.getFormElement(TAG_PASSWORD);
-                Toast.makeText(LoginFormActivity.this, "Do whatever you want with this data\n" + loginElement.getValue() + "\n" + passwordElement.getValue(), Toast.LENGTH_SHORT).show();
+                if (mFormBuilder.isValidForm()) {
+                    BaseFormElement loginElement = mFormBuilder.getFormElement(TAG_EMAIL);
+                    BaseFormElement passwordElement = mFormBuilder.getFormElement(TAG_PASSWORD);
+                    Toast.makeText(LoginFormActivity.this, "Do whatever you want with this data\n" + loginElement.getValue() + "\n" + passwordElement.getValue(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LoginFormActivity.this, "Invalid form data", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -70,10 +75,10 @@ public class LoginFormActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mFormBuilder = new FormBuildHelper(this, mRecyclerView);
 
-        FormElement element1 = FormElement.createInstance().setTag(TAG_EMAIL).setType(FormElement.TYPE_EDITTEXT_EMAIL).setTitle("Email");
-        FormElement element2 = FormElement.createInstance().setTag(TAG_PASSWORD).setType(FormElement.TYPE_EDITTEXT_PASSWORD).setTitle("Password");
+        FormElementTextEmail element1 = FormElementTextEmail.createInstance().setTag(TAG_EMAIL).setTitle("Email").setRequired(true);
+        FormElementTextPassword element2 = FormElementTextPassword.createInstance().setTag(TAG_PASSWORD).setTitle("Password").setRequired(true);
 
-        List<FormObject> formItems = new ArrayList<>();
+        List<BaseFormElement> formItems = new ArrayList<>();
         formItems.add(element1);
         formItems.add(element2);
 

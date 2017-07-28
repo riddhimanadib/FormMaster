@@ -85,8 +85,8 @@ public class FullscreenFormActivity extends AppCompatActivity {
         fruits.add("Orange");
         fruits.add("Mango");
         fruits.add("Guava");
-        FormElementPickerSingle element41 = FormElementPickerSingle.createInstance().setTitle("Single Item").setOptions(fruits);
-        FormElementPickerMulti element42 = FormElementPickerMulti.createInstance().setTitle("Multi Items").setOptions(fruits);
+        FormElementPickerSingle element41 = FormElementPickerSingle.createInstance().setTitle("Single Item").setOptions(fruits).setPickerTitle("Pick any item");
+        FormElementPickerMulti element42 = FormElementPickerMulti.createInstance().setTitle("Multi Items").setOptions(fruits).setPickerTitle("Pick one or more");
 
         List<BaseFormElement> formItems = new ArrayList<>();
         formItems.add(header1);
