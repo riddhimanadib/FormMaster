@@ -10,7 +10,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.riddhimanadib.formmaster.helper.FormBuildHelper;
+import me.riddhimanadib.formmaster.FormBuilder;
 import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.BaseFormElement;
 import me.riddhimanadib.formmaster.model.FormElementPickerDate;
@@ -27,7 +27,7 @@ import me.riddhimanadib.formmaster.model.FormElementTextSingleLine;
 public class FormListenerActivity extends AppCompatActivity implements OnFormElementValueChangedListener {
 
     private RecyclerView mRecyclerView;
-    private FormBuildHelper mFormBuilder;
+    private FormBuilder mFormBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
     private void setupForm() {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mFormBuilder = new FormBuildHelper(this, mRecyclerView, this);
+        mFormBuilder = new FormBuilder(this, mRecyclerView, this);
 
         FormElementTextEmail element11 = FormElementTextEmail.createInstance().setTitle("Email").setHint("Enter Email");
         FormElementTextPhone element12 = FormElementTextPhone.createInstance().setTitle("Phone").setValue("+8801712345678");
@@ -95,7 +95,7 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
         formItems.add(element42);
 
         mFormBuilder.addFormElements(formItems);
-        mFormBuilder.refreshView();
+        // mFormBuilder.refreshView();
 
     }
 

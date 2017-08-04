@@ -6,13 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import me.riddhimanadib.formmaster.helper.FormBuildHelper;
+import me.riddhimanadib.formmaster.FormBuilder;
 import me.riddhimanadib.formmaster.model.BaseFormElement;
 import me.riddhimanadib.formmaster.model.FormElementTextEmail;
 import me.riddhimanadib.formmaster.model.FormElementTextPassword;
@@ -23,7 +22,7 @@ public class LoginFormActivity extends AppCompatActivity {
     private static final int TAG_PASSWORD = 2234;
 
     private RecyclerView mRecyclerView;
-    private FormBuildHelper mFormBuilder;
+    private FormBuilder mFormBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +72,7 @@ public class LoginFormActivity extends AppCompatActivity {
     private void setupForm() {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mFormBuilder = new FormBuildHelper(this, mRecyclerView);
+        mFormBuilder = new FormBuilder(this, mRecyclerView);
 
         FormElementTextEmail element1 = FormElementTextEmail.createInstance().setTag(TAG_EMAIL).setTitle("Email").setRequired(true);
         FormElementTextPassword element2 = FormElementTextPassword.createInstance().setTag(TAG_PASSWORD).setTitle("Password").setRequired(true);
@@ -83,7 +82,7 @@ public class LoginFormActivity extends AppCompatActivity {
         formItems.add(element2);
 
         mFormBuilder.addFormElements(formItems);
-        mFormBuilder.refreshView();
+        // mFormBuilder.refreshView();
 
     }
 }

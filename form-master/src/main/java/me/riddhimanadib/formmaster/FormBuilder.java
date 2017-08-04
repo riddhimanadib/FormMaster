@@ -1,4 +1,4 @@
-package me.riddhimanadib.formmaster.helper;
+package me.riddhimanadib.formmaster;
 
 import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,7 +16,7 @@ import me.riddhimanadib.formmaster.model.BaseFormElement;
  * Created by Adib on 16-Apr-17.
  */
 
-public class FormBuildHelper {
+public class FormBuilder {
 
     private FormAdapter mFormAdapter;
 
@@ -25,7 +25,7 @@ public class FormBuildHelper {
      * @param context
      * @param recyclerView
      */
-    public FormBuildHelper(Context context, RecyclerView recyclerView) {
+    public FormBuilder(Context context, RecyclerView recyclerView) {
         initializeFormBuildHelper(context, recyclerView, null);
     }
 
@@ -34,7 +34,7 @@ public class FormBuildHelper {
      * @param context
      * @param recyclerView
      */
-    public FormBuildHelper(Context context, RecyclerView recyclerView, OnFormElementValueChangedListener listener) {
+    public FormBuilder(Context context, RecyclerView recyclerView, OnFormElementValueChangedListener listener) {
         initializeFormBuildHelper(context, recyclerView, listener);
     }
 
@@ -66,13 +66,6 @@ public class FormBuildHelper {
      */
     public void addFormElements(List<BaseFormElement> baseFormElements) {
         this.mFormAdapter.addElements(baseFormElements);
-    }
-
-    /**
-     * redraws the view
-     */
-    public void refreshView() {
-        this.mFormAdapter.notifyDataSetChanged();
     }
 
     /**

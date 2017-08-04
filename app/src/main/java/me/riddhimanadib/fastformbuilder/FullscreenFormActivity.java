@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.riddhimanadib.formmaster.helper.FormBuildHelper;
+import me.riddhimanadib.formmaster.FormBuilder;
 import me.riddhimanadib.formmaster.model.BaseFormElement;
 import me.riddhimanadib.formmaster.model.FormElementPickerDate;
 import me.riddhimanadib.formmaster.model.FormElementPickerMulti;
@@ -26,7 +26,7 @@ import me.riddhimanadib.formmaster.model.FormHeader;
 public class FullscreenFormActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-    private FormBuildHelper mFormBuilder;
+    private FormBuilder mFormBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class FullscreenFormActivity extends AppCompatActivity {
     private void setupForm() {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mFormBuilder = new FormBuildHelper(this, mRecyclerView);
+        mFormBuilder = new FormBuilder(this, mRecyclerView);
 
         FormHeader header1 = FormHeader.createInstance("Personal Info");
         FormElementTextEmail element11 = FormElementTextEmail.createInstance().setTitle("Email").setHint("Enter Email");
@@ -98,14 +98,12 @@ public class FullscreenFormActivity extends AppCompatActivity {
         formItems.add(element23);
         formItems.add(header3);
         formItems.add(element31);
-        formItems.add(element32);
-        formItems.add(element33);
+//        formItems.add(element32);
+//        formItems.add(element33);
         formItems.add(header4);
-        formItems.add(element41);
-        formItems.add(element42);
-
+//        formItems.add(element41);
+//        formItems.add(element42);
         mFormBuilder.addFormElements(formItems);
-        mFormBuilder.refreshView();
 
     }
 

@@ -17,13 +17,9 @@ public class FormHeader extends BaseFormElement {
      */
     public static FormHeader createInstance(String title) {
         FormHeader formHeader = new FormHeader();
+        formHeader.setType(BaseFormElement.TYPE_HEADER);
         formHeader.setTitle(title);
         return formHeader;
-    }
-
-    @Override
-    public boolean isHeader() {
-        return true;
     }
 
 }

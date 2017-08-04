@@ -7,6 +7,7 @@ package me.riddhimanadib.formmaster.model;
 public class BaseFormElement {
 
     // different types for the form elements
+    public static final int TYPE_HEADER = 0;
     public static final int TYPE_EDITTEXT_TEXT_SINGLELINE = 1;
     public static final int TYPE_EDITTEXT_TEXT_MULTILINE = 2;
     public static final int TYPE_EDITTEXT_NUMBER = 3;
@@ -17,6 +18,7 @@ public class BaseFormElement {
     public static final int TYPE_PICKER_TIME = 8;
     public static final int TYPE_PICKER_SINGLE = 9;
     public static final int TYPE_PICKER_MULTI = 10;
+    public static final int TYPE_SWITCH = 11;
 
     // private variables
     private int mTag; // unique tag to identify the object
@@ -80,14 +82,6 @@ public class BaseFormElement {
 
     public boolean isRequired() {
         return this.mRequired;
-    }
-
-    /**
-     * detects whether header or regular form items
-     * @return
-     */
-    public boolean isHeader() {
-        return false;
     }
 
     @Override

@@ -6,6 +6,8 @@ package me.riddhimanadib.formmaster.model;
 
 public class FormElementPickerDate extends BaseFormElement {
 
+    // TODO: add date formats
+
     public FormElementPickerDate() {
     }
 
