@@ -76,8 +76,18 @@ public class PartialScreenFormActivity extends AppCompatActivity {
         fruits.add("Orange");
         fruits.add("Mango");
         fruits.add("Guava");
-        FormElement element41 = FormElement.createInstance().setType(FormElement.TYPE_SPINNER_DROPDOWN).setTitle("Single Item").setOptions(fruits);
-        FormElement element42 = FormElement.createInstance().setType(FormElement.TYPE_PICKER_MULTI_CHECKBOX).setTitle("Multi Items").setOptions(fruits);
+
+        FormElement element41 = FormElement.createInstance()
+                .setType(FormElement.TYPE_SPINNER_DROPDOWN)
+                .setTitle("Single Item")
+                .setDropdownTitle("Pick one")
+                .setOptions(fruits);
+
+        FormElement element42 = FormElement.createInstance()
+                .setType(FormElement.TYPE_PICKER_MULTI_CHECKBOX)
+                .setTitle("Multi Items")
+                .setCheckboxTitle("Pick one or more")
+                .setOptions(fruits);
 
 
         List<FormObject> formItems = new ArrayList<>();

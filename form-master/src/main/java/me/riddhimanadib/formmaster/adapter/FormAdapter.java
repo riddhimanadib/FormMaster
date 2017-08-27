@@ -1,10 +1,13 @@
 package me.riddhimanadib.formmaster.adapter;
 
 import android.app.DatePickerDialog;
+import android.app.FragmentManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -18,9 +21,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import me.riddhimanadib.formmaster.R;
@@ -34,7 +41,7 @@ import me.riddhimanadib.formmaster.model.FormObject;
  * Created by Adib on 16-Apr-17.
  */
 
-public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
+public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder>{
 
     // defining marker for header view
     private int IS_HEADER_VIEW = 0;
@@ -46,6 +53,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
     private OnFormElementValueChangedListener mListener;
 
     private int clickedPosition;
+    FormElement formelement;
 
     /**
      * public constructor with context
@@ -289,19 +297,19 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
      */
     private void showDatePickerDialog(int position) {
         clickedPosition = position;
-
-        // prepares date picker dialog
+        //  Prepares date picker dialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(mContext,
-            date,
-            mCalendarCurrentDate.get(Calendar.YEAR),
-            mCalendarCurrentDate.get(Calendar.MONTH),
-            mCalendarCurrentDate.get(Calendar.DAY_OF_MONTH));
+                date,
+                mCalendarCurrentDate.get(Calendar.YEAR),
+                mCalendarCurrentDate.get(Calendar.MONTH),
+                mCalendarCurrentDate.get(Calendar.DAY_OF_MONTH));
 
         // this could be used to set a minimum date
         // datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
         // display the picker
         datePickerDialog.show();
+
     }
 
     /**
@@ -368,7 +376,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
         // prepare the dialog
         final AlertDialog dialog = new AlertDialog.Builder(mContext)
-                .setTitle("Pick one")
+                .setTitle(FormElement.DropDown_Title)
                 .setItems(options, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         holder.mEditTextValue.setText(options[which]);
@@ -417,7 +425,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
         // prepare the dialog
         final AlertDialog dialog  = new AlertDialog.Builder(mContext)
-                .setTitle("Pick one or more")
+                .setTitle(FormElement.Checkbox_Title)
                 .setMultiChoiceItems(options, optionsSelected,
                         new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
@@ -465,6 +473,9 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             }
         });
     }
+
+
+
 
     /**
      * View holder class
@@ -593,5 +604,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             }
         }
     };
+
+
 
 }

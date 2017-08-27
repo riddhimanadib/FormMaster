@@ -32,6 +32,9 @@ public class FormElement implements FormObject {
     private String mHint; // value to be shown if mValue is null
     private boolean mRequired; // value to set is the field is required
 
+    public static String DropDown_Title; // title to be shown on alertdialog
+    public static String Checkbox_Title; // title to be shown on alertdialog
+
     public FormElement() {
     }
 
@@ -82,6 +85,16 @@ public class FormElement implements FormObject {
 
     public FormElement setOptionsSelected(List<String> mOptionsSelected) {
         this.mOptionsSelected = mOptionsSelected;
+        return this;
+    }
+
+    public FormElement setDropdownTitle(String DropDown_Title) {
+        this.DropDown_Title = DropDown_Title;
+        return this;
+    }
+
+    public FormElement setCheckboxTitle(String Checkbox_Title) {
+        this.Checkbox_Title = Checkbox_Title;
         return this;
     }
 
