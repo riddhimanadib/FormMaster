@@ -62,6 +62,8 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
         notifyDataSetChanged();
     }
 
+    // TODO: add element at index
+
     /**
      * set value for any unique index
      * @param position

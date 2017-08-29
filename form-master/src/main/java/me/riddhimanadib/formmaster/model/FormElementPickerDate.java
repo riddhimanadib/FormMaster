@@ -1,20 +1,24 @@
 package me.riddhimanadib.formmaster.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  * Created by Riddhi - Rudra on 28-Jul-17.
  */
 
 public class FormElementPickerDate extends BaseFormElement {
 
-    // TODO: add date formats
+    private String dateFormat; // custom format for date
 
     public FormElementPickerDate() {
     }
 
     public static FormElementPickerDate createInstance() {
-        FormElementPickerDate FormElementPickerDate = new FormElementPickerDate();
-        FormElementPickerDate.setType(BaseFormElement.TYPE_PICKER_DATE);
-        return FormElementPickerDate;
+        FormElementPickerDate formElementPickerDate = new FormElementPickerDate();
+        formElementPickerDate.setType(BaseFormElement.TYPE_PICKER_DATE);
+        formElementPickerDate.setDateFormat("dd/MM/yy");
+        return formElementPickerDate;
     }
 
     public FormElementPickerDate setTag(int mTag) {
@@ -39,6 +43,26 @@ public class FormElementPickerDate extends BaseFormElement {
 
     public FormElementPickerDate setRequired(boolean required) {
         return (FormElementPickerDate)  super.setRequired(required);
+    }
+
+    // custom setter
+    public FormElementPickerDate setDateFormat(String format) {
+        checkValidDateFormat(format);
+        this.dateFormat = format;
+        return this;
+    }
+
+    // custom getter
+    public String getDateFormat() {
+        return this.dateFormat;
+    }
+
+    private void checkValidDateFormat(String format) {
+        try {
+            new SimpleDateFormat(format, Locale.US);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Date format is not correct: " + e.getMessage());
+        }
     }
     
 }

@@ -14,6 +14,7 @@ import java.util.Locale;
 import me.riddhimanadib.formmaster.R;
 import me.riddhimanadib.formmaster.listener.ReloadListener;
 import me.riddhimanadib.formmaster.model.BaseFormElement;
+import me.riddhimanadib.formmaster.model.FormElementPickerDate;
 
 /**
  * Created by Riddhi - Rudra on 30-Jul-17.
@@ -35,17 +36,18 @@ public class FormElementPickerDateViewHolder extends BaseViewHolder {
         mEditTextValue = (AppCompatEditText) v.findViewById(R.id.formElementValue);
         mReloadListener = reloadListener;
         mCalendarCurrentDate = java.util.Calendar.getInstance();
-        mDatePickerDialog = new DatePickerDialog(context,
-                date,
-                mCalendarCurrentDate.get(Calendar.YEAR),
-                mCalendarCurrentDate.get(Calendar.MONTH),
-                mCalendarCurrentDate.get(Calendar.DAY_OF_MONTH));
     }
 
     @Override
     public void bind(int position, BaseFormElement formElement, final Context context) {
         mFormElement = formElement;
         mPosition = position;
+
+        mDatePickerDialog = new DatePickerDialog(context,
+                date,
+                mCalendarCurrentDate.get(Calendar.YEAR),
+                mCalendarCurrentDate.get(Calendar.MONTH),
+                mCalendarCurrentDate.get(Calendar.DAY_OF_MONTH));
 
         mTextViewTitle.setText(formElement.getTitle());
         mEditTextValue.setText(formElement.getValue());
@@ -77,7 +79,7 @@ public class FormElementPickerDateViewHolder extends BaseViewHolder {
             mCalendarCurrentDate.set(Calendar.MONTH, monthOfYear);
             mCalendarCurrentDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            String myFormatDate = "dd/MM/yy"; // custom format
+            String myFormatDate = ((FormElementPickerDate) mFormElement).getDateFormat();
             SimpleDateFormat sdfDate = new SimpleDateFormat(myFormatDate, Locale.US);
 
             String currentValue = mFormElement.getValue();
