@@ -75,8 +75,8 @@ public class FullscreenFormActivity extends AppCompatActivity {
         FormElementTextNumber element23 = FormElementTextNumber.createInstance().setTitle("Zip Code").setValue("1000");
 
         FormHeader header3 = FormHeader.createInstance("Schedule");
-        FormElementPickerDate element31 = FormElementPickerDate.createInstance().setTitle("Date").setDateFormat("MMM, dd yyyy");
-        FormElementPickerTime element32 = FormElementPickerTime.createInstance().setTitle("Time");
+        FormElementPickerDate element31 = FormElementPickerDate.createInstance().setTitle("Date").setDateFormat("MMM dd, yyyy");
+        FormElementPickerTime element32 = FormElementPickerTime.createInstance().setTitle("Time").setTimeFormat("KK hh");
         FormElementTextPassword element33 = FormElementTextPassword.createInstance().setTitle("Password").setValue("abcd1234");
 
         FormHeader header4 = FormHeader.createInstance("Preferred Items");
@@ -98,7 +98,7 @@ public class FullscreenFormActivity extends AppCompatActivity {
         formItems.add(element23);
         formItems.add(header3);
         formItems.add(element31);
-//        formItems.add(element32);
+        formItems.add(element32);
 //        formItems.add(element33);
         formItems.add(header4);
 //        formItems.add(element41);
