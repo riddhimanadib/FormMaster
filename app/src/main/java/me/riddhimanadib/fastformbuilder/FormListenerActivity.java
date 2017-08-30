@@ -71,8 +71,20 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
         fruits.add("Orange");
         fruits.add("Mango");
         fruits.add("Guava");
-        FormElement element41 = FormElement.createInstance().setType(FormElement.TYPE_SPINNER_DROPDOWN).setTitle("Single Item").setOptions(fruits);
-        FormElement element42 = FormElement.createInstance().setType(FormElement.TYPE_PICKER_MULTI_CHECKBOX).setTitle("Multi Items").setOptions(fruits);
+
+        FormElement element41 = FormElement.createInstance()
+                .setType(FormElement.TYPE_SPINNER_DROPDOWN)
+                .setTitle("Single Item")
+                .setAlertTitle("Pick one")
+                .setOptions(fruits);
+
+        FormElement element42 = FormElement.createInstance()
+                .setType(FormElement.TYPE_PICKER_MULTI_CHECKBOX)
+                .setTitle("Multi Items")
+                .setAlertTitle("Pick one or more")
+                .setPositiveButtonText("OK")
+                .setNegativeButtonText("CLOSE")
+                .setOptions(fruits);
 
         List<FormObject> formItems = new ArrayList<>();
         formItems.add(element11);
