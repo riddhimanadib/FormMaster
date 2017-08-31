@@ -20,6 +20,7 @@ import me.riddhimanadib.formmaster.viewholder.FormElementPickerTimeViewHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementTextEmailViewHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementTextMultiLineViewHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementTextNumberViewHolder;
+import me.riddhimanadib.formmaster.viewholder.FormElementTextPasswordViewHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementTextPhoneViewHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementTextSingleLineViewHolder;
 import me.riddhimanadib.formmaster.listener.ReloadListener;
@@ -181,6 +182,9 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
             case BaseFormElement.TYPE_EDITTEXT_PHONE:
                 v = inflater.inflate(R.layout.form_element, parent, false);
                 return new FormElementTextPhoneViewHolder(v, new FormItemEditTextListener(this));
+            case BaseFormElement.TYPE_EDITTEXT_PASSWORD:
+                v = inflater.inflate(R.layout.form_element, parent, false);
+                return new FormElementTextPasswordViewHolder(v, new FormItemEditTextListener(this));
             case BaseFormElement.TYPE_PICKER_DATE:
                 v = inflater.inflate(R.layout.form_element, parent, false);
                 return new FormElementPickerDateViewHolder(v, mContext, this);
