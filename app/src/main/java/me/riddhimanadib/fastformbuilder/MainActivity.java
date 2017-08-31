@@ -24,6 +24,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ((Button) findViewById(R.id.buttonJSONFormActivity)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, JSONFormActivity.class));
+            }
+        });
+
         ((Button) findViewById(R.id.buttonPartialScreenActivity)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

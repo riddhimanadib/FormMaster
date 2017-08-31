@@ -368,7 +368,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
         // prepare the dialog
         final AlertDialog dialog = new AlertDialog.Builder(mContext)
-                .setTitle("Pick one")
+                .setTitle(currentObj.getAlertTitle())
                 .setItems(options, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         holder.mEditTextValue.setText(options[which]);
@@ -417,7 +417,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
         // prepare the dialog
         final AlertDialog dialog  = new AlertDialog.Builder(mContext)
-                .setTitle("Pick one or more")
+                .setTitle(currentObj.getAlertTitle())
                 .setMultiChoiceItems(options, optionsSelected,
                         new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
@@ -433,7 +433,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                             }
                         })
                 // Set the action buttons
-                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                .setPositiveButton(currentObj.getPositiveButtonText(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         String s = "";
@@ -449,7 +449,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                         notifyDataSetChanged();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(currentObj.getNegativeButtonText(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 

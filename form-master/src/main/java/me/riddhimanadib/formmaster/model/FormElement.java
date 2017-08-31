@@ -32,6 +32,10 @@ public class FormElement implements FormObject {
     private String mHint; // value to be shown if mValue is null
     private boolean mRequired; // value to set is the field is required
 
+    private String alertTitle; // title to be shown on alertdialog for TYPE_SPINNER_DROPDOWN and TYPE_PICKER_MULTI_CHECKBOX
+    private String positiveButtonText; // String to be shown on positive button alertdialog for TYPE_PICKER_MULTI_CHECKBOX
+    private String negativeButtonText; // String to be shown on negative button alertdialog for TYPE_PICKER_MULTI_CHECKBOX
+
     public FormElement() {
     }
 
@@ -125,6 +129,33 @@ public class FormElement implements FormObject {
     @Override
     public String toString() {
         return "TAG: " + String.valueOf(this.mTag) + ", TITLE: " + this.mTitle + ", VALUE: " + this.mValue + ", REQUIRED: " + String.valueOf(this.mRequired);
+    }
+
+    public String getAlertTitle() {
+        return (this.alertTitle == null) ? "" : this.alertTitle;
+    }
+
+    public FormElement setAlertTitle(String alertTitle) {
+        this.alertTitle = alertTitle;
+        return this;
+    }
+
+    public String getPositiveButtonText() {
+        return (this.positiveButtonText == null) ? "OKAY" : this.positiveButtonText;
+    }
+
+    public FormElement setPositiveButtonText(String positiveButtonText) {
+        this.positiveButtonText = positiveButtonText;
+        return this;
+    }
+
+    public String getNegativeButtonText() {
+        return (this.negativeButtonText == null) ? "CANCEL" : this.negativeButtonText;
+    }
+
+    public FormElement setNegativeButtonText(String negativeButtonText) {
+        this.negativeButtonText = negativeButtonText;
+        return this;
     }
 
 }

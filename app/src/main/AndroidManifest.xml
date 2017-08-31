@@ -19,7 +19,8 @@
         <activity android:name=".FullscreenFormActivity" />
         <activity android:name=".PartialScreenFormActivity" />
         <activity android:name=".LoginFormActivity" />
-        <activity android:name=".FormListenerActivity"></activity>
+        <activity android:name=".FormListenerActivity" />
+        <activity android:name=".JSONFormActivity"></activity>
     </application>
 
 </manifest>
