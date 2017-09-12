@@ -12,7 +12,8 @@ import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.FormElement;
 import me.riddhimanadib.formmaster.model.FormObject;
 
-/** Wrapper class around the adapter to assist in building form
+/**
+ * Wrapper class around the adapter to assist in building form
  * Created by Adib on 16-Apr-17.
  */
 
@@ -22,6 +23,7 @@ public class FormBuildHelper {
 
     /**
      * constructor without listener callback for changed values
+     *
      * @param context
      * @param recyclerView
      */
@@ -31,6 +33,7 @@ public class FormBuildHelper {
 
     /**
      * constructor with listener callback for changed values
+     *
      * @param context
      * @param recyclerView
      */
@@ -40,6 +43,7 @@ public class FormBuildHelper {
 
     /**
      * private method for initializing form build helper
+     *
      * @param context
      * @param recyclerView
      * @param listener
@@ -62,6 +66,7 @@ public class FormBuildHelper {
 
     /**
      * add list of form elements to be shown
+     *
      * @param formElements
      */
     public void addFormElements(List<FormObject> formElements) {
@@ -77,6 +82,7 @@ public class FormBuildHelper {
 
     /**
      * get value of specific form element
+     *
      * @param tag
      * @return
      */
@@ -85,7 +91,6 @@ public class FormBuildHelper {
     }
 
     /**
-     *
      * return true if the form is valid
      *
      * @return
@@ -100,4 +105,7 @@ public class FormBuildHelper {
         return true;
     }
 
+    public List<FormObject> getAllObjects() {
+        return this.mFormAdapter.getAllFormObjects();
+    }
 }

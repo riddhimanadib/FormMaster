@@ -1,17 +1,16 @@
 package me.riddhimanadib.fastformbuilder;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import me.riddhimanadib.formmaster.helper.FormBuildHelper;
-import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.FormElement;
 import me.riddhimanadib.formmaster.model.FormHeader;
 import me.riddhimanadib.formmaster.model.FormObject;
@@ -29,6 +28,13 @@ public class FullscreenFormActivity extends AppCompatActivity {
         setupToolBar();
 
         setupForm();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        int size = mFormBuilder.getAllObjects().size();
+        outState.putParcelableArray("form_elements", mFormBuilder.getAllObjects().toArray(new Parcelable[size]));
     }
 
     @Override

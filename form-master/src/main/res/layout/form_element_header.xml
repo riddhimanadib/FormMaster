@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorFormMasterHeaderBackground"
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:background="@color/colorFormMasterHeaderBackground"
-    android:layout_height="wrap_content">
+    android:paddingTop="20dp">
 
     <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/formElementTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/formElementTitle"
+        android:textColor="@color/colorFormMasterHeaderText"
         android:textSize="@dimen/headerTextSize"
-        tools:text="Personal Info"
-        android:textColor="@color/colorFormMasterHeaderText"/>
+        tools:text="Personal Info" />
 
 </LinearLayout>

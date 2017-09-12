@@ -18,11 +18,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
 import me.riddhimanadib.formmaster.R;
 import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.FormElement;
@@ -46,9 +48,76 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
     private OnFormElementValueChangedListener mListener;
 
     private int clickedPosition;
+    /**
+     * setting up date picker dialog listener
+     */
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            mCalendarCurrentDate.set(Calendar.YEAR, year);
+            mCalendarCurrentDate.set(Calendar.MONTH, monthOfYear);
+            mCalendarCurrentDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            String myFormatDate = "dd/MM/yy"; // custom format
+            SimpleDateFormat sdfDate = new SimpleDateFormat(myFormatDate, Locale.US);
+
+            // act only if clicked position is a valid index
+            if (clickedPosition >= 0) {
+                // get current form element, existing value and new value
+                FormElement formElement = (FormElement) mDataset.get(clickedPosition);
+                String currentValue = formElement.getValue();
+                String newValue = sdfDate.format(mCalendarCurrentDate.getTime());
+
+                // trigger event only if the value is changed
+                if (!currentValue.equals(newValue)) {
+                    formElement.setValue(newValue);
+                    notifyDataSetChanged();
+                    if (mListener != null)
+                        mListener.onValueChanged(formElement);
+                }
+
+                // change clicked position to default value
+                clickedPosition = -1;
+            }
+        }
+
+    };
+    /**
+     * setting up time picker dialog listener
+     */
+    TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            mCalendarCurrentTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            mCalendarCurrentTime.set(Calendar.MINUTE, minute);
+
+            String myFormatTime = "KK:mm a"; // custom format
+            SimpleDateFormat sdfTime = new SimpleDateFormat(myFormatTime, Locale.US);
+
+            // act only if clicked position is a valid index
+            if (clickedPosition >= 0) {
+                // get current form element, existing value and new value
+                FormElement formElement = (FormElement) mDataset.get(clickedPosition);
+                String currentValue = formElement.getValue();
+                String newValue = sdfTime.format(mCalendarCurrentTime.getTime());
+
+                // trigger event only if the value is changed
+                if (!currentValue.equals(newValue)) {
+                    formElement.setValue(newValue);
+                    notifyDataSetChanged();
+                    if (mListener != null)
+                        mListener.onValueChanged(formElement);
+                }
+
+                // change clicked position to default value
+                clickedPosition = -1;
+            }
+        }
+    };
 
     /**
      * public constructor with context
+     *
      * @param context
      */
     public FormAdapter(Context context, OnFormElementValueChangedListener listener) {
@@ -62,6 +131,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * adds list of elements to be shown
+     *
      * @param formObjects
      */
     public void addElements(List<FormObject> formObjects) {
@@ -70,6 +140,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * adds single element to be shown
+     *
      * @param formObject
      */
     public void addElement(FormObject formObject) {
@@ -78,6 +149,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * set value for any unique index
+     *
      * @param position
      * @param value
      */
@@ -88,6 +160,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * set value for any unique tag
+     *
      * @param tag
      * @param value
      */
@@ -104,8 +177,13 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
         }
     }
 
+    public List<FormObject> getAllFormObjects() {
+        return mDataset;
+    }
+
     /**
      * get value of any element by tag
+     *
      * @param index
      * @return
      */
@@ -115,6 +193,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * get value of any element by tag
+     *
      * @param tag
      * @return
      */
@@ -133,6 +212,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * gets total item count
+     *
      * @return
      */
     @Override
@@ -142,6 +222,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * gets view item type based on header, or the form element type
+     *
      * @param position
      * @return
      */
@@ -156,6 +237,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * creating the view holder to be shown for a position
+     *
      * @param parent
      * @param viewType
      * @return
@@ -173,6 +255,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * draws the view for the position specific view holder
+     *
      * @param holder
      * @param position
      */
@@ -204,18 +287,18 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                 case FormElement.TYPE_EDITTEXT_TEXT_MULTILINE:
                     holder.mEditTextValue.setSingleLine(false);
                     holder.mEditTextValue.setMaxLines(4);
-                  setEditTextFocusEnabled(holder);
+                    setEditTextFocusEnabled(holder);
                     break;
                 case FormElement.TYPE_EDITTEXT_NUMBER:
-                    holder.mEditTextValue.setRawInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+                    holder.mEditTextValue.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
                     setEditTextFocusEnabled(holder);
                     break;
                 case FormElement.TYPE_EDITTEXT_EMAIL:
-                    holder.mEditTextValue.setRawInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+                    holder.mEditTextValue.setRawInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
                     setEditTextFocusEnabled(holder);
                     break;
                 case FormElement.TYPE_EDITTEXT_PHONE:
-                    holder.mEditTextValue.setRawInputType(InputType.TYPE_CLASS_PHONE|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+                    holder.mEditTextValue.setRawInputType(InputType.TYPE_CLASS_PHONE | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
                     setEditTextFocusEnabled(holder);
                     break;
                 case FormElement.TYPE_EDITTEXT_PASSWORD:
@@ -244,21 +327,23 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * brings focus when clicked on the whole container
+     *
      * @param holder
      */
     private void setEditTextFocusEnabled(final ViewHolder holder) {
         holder.itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            holder.mEditTextValue.requestFocus();
-            InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(holder.mEditTextValue, InputMethodManager.SHOW_IMPLICIT);
+                holder.mEditTextValue.requestFocus();
+                InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(holder.mEditTextValue, InputMethodManager.SHOW_IMPLICIT);
             }
         });
     }
 
     /**
      * prepares the datepicker for the clicked position and attaches click listener for the passed edittext and listener for the itemview
+     *
      * @param holder
      * @param position
      */
@@ -269,7 +354,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 // saves clicked position for further reference
-              showDatePickerDialog(position);
+                showDatePickerDialog(position);
             }
         });
 
@@ -277,7 +362,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 // saves clicked position for further reference
-              showDatePickerDialog(position);
+                showDatePickerDialog(position);
             }
         });
 
@@ -285,6 +370,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * prepares the date picker dialog for the clicked position and updates the clickedPosition
+     *
      * @param position
      */
     private void showDatePickerDialog(int position) {
@@ -292,10 +378,10 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
         // prepares date picker dialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(mContext,
-            date,
-            mCalendarCurrentDate.get(Calendar.YEAR),
-            mCalendarCurrentDate.get(Calendar.MONTH),
-            mCalendarCurrentDate.get(Calendar.DAY_OF_MONTH));
+                date,
+                mCalendarCurrentDate.get(Calendar.YEAR),
+                mCalendarCurrentDate.get(Calendar.MONTH),
+                mCalendarCurrentDate.get(Calendar.DAY_OF_MONTH));
 
         // this could be used to set a minimum date
         // datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
@@ -306,6 +392,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * prepares the timepicker for the clicked position and attaches click listener for the passed edittext
+     *
      * @param holder
      * @param position
      */
@@ -315,41 +402,43 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
         holder.mEditTextValue.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-              showTimePicker(position);
+                showTimePicker(position);
             }
         });
 
         holder.itemView.setOnClickListener(new OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            showTimePicker(position);
-          }
+            @Override
+            public void onClick(View view) {
+                showTimePicker(position);
+            }
         });
 
     }
 
     /**
      * prepares the time picker dialog for the clicked position and updates the clickedPosition
+     *
      * @param position
      */
     private void showTimePicker(int position) {
 
-      // saves clicked position for further reference
-      clickedPosition = position;
+        // saves clicked position for further reference
+        clickedPosition = position;
 
-      // prepares time picker dialog
-      TimePickerDialog timePickerDialog = new TimePickerDialog(mContext,
-          time,
-          mCalendarCurrentDate.get(Calendar.HOUR),
-          mCalendarCurrentDate.get(Calendar.MINUTE),
-          false);
+        // prepares time picker dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(mContext,
+                time,
+                mCalendarCurrentDate.get(Calendar.HOUR),
+                mCalendarCurrentDate.get(Calendar.MINUTE),
+                false);
 
-      // display the picker
-      timePickerDialog.show();
+        // display the picker
+        timePickerDialog.show();
     }
 
     /**
      * prepares a single picker dialog for the clicked position and attaches click listener for the passed edittext
+     *
      * @param holder
      * @param position
      */
@@ -390,6 +479,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
     /**
      * prepares a multi checkbox picker dialog for the clicked position and attaches click listener for the passed edittext
+     *
      * @param holder
      * @param position
      */
@@ -416,7 +506,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
         }
 
         // prepare the dialog
-        final AlertDialog dialog  = new AlertDialog.Builder(mContext)
+        final AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle("Pick one or more")
                 .setMultiChoiceItems(options, optionsSelected,
                         new DialogInterface.OnMultiChoiceClickListener() {
@@ -525,73 +615,5 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
         }
     }
-
-    /**
-     * setting up date picker dialog listener
-     */
-    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mCalendarCurrentDate.set(Calendar.YEAR, year);
-            mCalendarCurrentDate.set(Calendar.MONTH, monthOfYear);
-            mCalendarCurrentDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-            String myFormatDate = "dd/MM/yy"; // custom format
-            SimpleDateFormat sdfDate = new SimpleDateFormat(myFormatDate, Locale.US);
-
-            // act only if clicked position is a valid index
-            if (clickedPosition >= 0) {
-                // get current form element, existing value and new value
-                FormElement formElement = (FormElement) mDataset.get(clickedPosition);
-                String currentValue = formElement.getValue();
-                String newValue = sdfDate.format(mCalendarCurrentDate.getTime());
-
-                // trigger event only if the value is changed
-                if (!currentValue.equals(newValue)) {
-                    formElement.setValue(newValue);
-                    notifyDataSetChanged();
-                    if (mListener != null)
-                        mListener.onValueChanged(formElement);
-                }
-
-                // change clicked position to default value
-                clickedPosition = -1;
-            }
-        }
-
-    };
-
-    /**
-     * setting up time picker dialog listener
-     */
-    TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            mCalendarCurrentTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            mCalendarCurrentTime.set(Calendar.MINUTE, minute);
-
-            String myFormatTime = "KK:mm a"; // custom format
-            SimpleDateFormat sdfTime = new SimpleDateFormat(myFormatTime, Locale.US);
-
-            // act only if clicked position is a valid index
-            if (clickedPosition >= 0) {
-                // get current form element, existing value and new value
-                FormElement formElement = (FormElement) mDataset.get(clickedPosition);
-                String currentValue = formElement.getValue();
-                String newValue = sdfTime.format(mCalendarCurrentTime.getTime());
-
-                // trigger event only if the value is changed
-                if (!currentValue.equals(newValue)) {
-                    formElement.setValue(newValue);
-                    notifyDataSetChanged();
-                    if (mListener != null)
-                        mListener.onValueChanged(formElement);
-                }
-
-                // change clicked position to default value
-                clickedPosition = -1;
-            }
-        }
-    };
 
 }

@@ -1,32 +1,31 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
     <Button
+        android:id="@+id/buttonFullScreenActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonFullScreenActivity"
         android:text="full screen form" />
 
     <Button
+        android:id="@+id/buttonPartialScreenActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonPartialScreenActivity"
         android:text="partial screen form" />
 
     <Button
+        android:id="@+id/buttonFormListenerActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonFormListenerActivity"
         android:text="form with listener" />
 
     <Button
+        android:id="@+id/buttonLoginActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonLoginActivity"
         android:text="sample login form" />
 
 </LinearLayout>
