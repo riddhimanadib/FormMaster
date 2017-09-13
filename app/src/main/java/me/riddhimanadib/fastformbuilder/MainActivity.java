@@ -41,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ((Button) findViewById(R.id.buttonSaveInstanceActivity)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, SaveFormInstanceActivity.class));
+            }
+        });
+
     }
 
 }

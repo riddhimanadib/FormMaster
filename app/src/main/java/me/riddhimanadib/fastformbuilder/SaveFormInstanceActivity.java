@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
@@ -15,7 +16,14 @@ import me.riddhimanadib.formmaster.model.FormElement;
 import me.riddhimanadib.formmaster.model.FormHeader;
 import me.riddhimanadib.formmaster.model.FormObject;
 
-public class FullscreenFormActivity extends AppCompatActivity {
+/**
+ * Created by Amit Barjatya on 9/12/17.
+ */
+
+public class SaveFormInstanceActivity extends AppCompatActivity {
+
+    private static final String KEY = "form_elements";
+    private static final String KEY_TYPE = "form_elements_type";
 
     private RecyclerView mRecyclerView;
     private FormBuildHelper mFormBuilder;
@@ -26,8 +34,19 @@ public class FullscreenFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fullscreen_form);
 
         setupToolBar();
+        if (savedInstanceState==null) {
+            setupForm();
+        }else {
+            setupForm(savedInstanceState);
+        }
+    }
 
-        setupForm();
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        ArrayList<FormObject> objects = new ArrayList<>(mFormBuilder.getAllObjects());
+        outState.putParcelableArrayList(KEY, objects);
     }
 
     @Override
@@ -102,4 +121,11 @@ public class FullscreenFormActivity extends AppCompatActivity {
 
     }
 
+    private void setupForm(Bundle bundle){
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mFormBuilder = new FormBuildHelper(this, mRecyclerView);
+        ArrayList<FormObject> objects = bundle.getParcelableArrayList(KEY);
+        mFormBuilder.addFormElements(objects);
+        mFormBuilder.refreshView();
+    }
 }

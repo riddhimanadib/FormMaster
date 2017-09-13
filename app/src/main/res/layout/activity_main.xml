@@ -28,4 +28,11 @@
         android:layout_height="wrap_content"
         android:text="sample login form" />
 
+
+    <Button
+        android:id="@+id/buttonSaveInstanceActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="sample save instance form" />
+
 </LinearLayout>
