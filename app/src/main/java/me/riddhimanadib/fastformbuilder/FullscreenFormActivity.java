@@ -1,7 +1,6 @@
 package me.riddhimanadib.fastformbuilder;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;

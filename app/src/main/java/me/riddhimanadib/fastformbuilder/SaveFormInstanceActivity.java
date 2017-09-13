@@ -1,11 +1,9 @@
 package me.riddhimanadib.fastformbuilder;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
@@ -34,9 +32,9 @@ public class SaveFormInstanceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fullscreen_form);
 
         setupToolBar();
-        if (savedInstanceState==null) {
+        if (savedInstanceState == null) {
             setupForm();
-        }else {
+        } else {
             setupForm(savedInstanceState);
         }
     }
@@ -121,7 +119,7 @@ public class SaveFormInstanceActivity extends AppCompatActivity {
 
     }
 
-    private void setupForm(Bundle bundle){
+    private void setupForm(Bundle bundle) {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mFormBuilder = new FormBuildHelper(this, mRecyclerView);
         ArrayList<FormObject> objects = bundle.getParcelableArrayList(KEY);
