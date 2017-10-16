@@ -93,7 +93,7 @@ public class FormBuildHelper {
     public boolean isValidForm() {
         for (int i = 0; i < this.mFormAdapter.getItemCount(); i++) {
             FormElement formElement = this.mFormAdapter.getValueAtIndex(i);
-            if (formElement.isHeader() == false & formElement.isRequired() & formElement.getValue().trim().isEmpty()) {
+            if (formElement.isHeader() == false & formElement.isRequired() & formElement.getValue().toString().trim().isEmpty()) {
                 return false;
             }
         }

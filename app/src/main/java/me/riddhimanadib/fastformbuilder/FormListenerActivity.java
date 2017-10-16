@@ -1,8 +1,8 @@
 package me.riddhimanadib.fastformbuilder;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -13,10 +13,28 @@ import java.util.List;
 import me.riddhimanadib.formmaster.helper.FormBuildHelper;
 import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.FormElement;
-import me.riddhimanadib.formmaster.model.FormHeader;
 import me.riddhimanadib.formmaster.model.FormObject;
 
 public class FormListenerActivity extends AppCompatActivity implements OnFormElementValueChangedListener {
+
+    enum Fruit {
+        BANANA, ORANGE, MANGO, GUAVA;
+
+        public String toString() {
+            switch (this) {
+                case BANANA:
+                    return "Banana";
+                case ORANGE:
+                    return "Orange";
+                case MANGO:
+                    return "Mango";
+                case GUAVA:
+                    return "Guava";
+            }
+
+            return "";
+        }
+    }
 
     private RecyclerView mRecyclerView;
     private FormBuildHelper mFormBuilder;
@@ -66,13 +84,21 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
         FormElement element31 = FormElement.createInstance().setType(FormElement.TYPE_PICKER_DATE).setTitle("Date");
         FormElement element32 = FormElement.createInstance().setType(FormElement.TYPE_PICKER_TIME).setTitle("Time");
         FormElement element33 = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_PASSWORD).setTitle("Password").setValue("abcd1234");
-        List<String> fruits = new ArrayList<>();
-        fruits.add("Banana");
-        fruits.add("Orange");
-        fruits.add("Mango");
-        fruits.add("Guava");
-        FormElement element41 = FormElement.createInstance().setType(FormElement.TYPE_SPINNER_DROPDOWN).setTitle("Single Item").setOptions(fruits);
-        FormElement element42 = FormElement.createInstance().setType(FormElement.TYPE_PICKER_MULTI_CHECKBOX).setTitle("Multi Items").setOptions(fruits);
+
+        List<String> fruitStrings = new ArrayList<>();
+        fruitStrings.add("Banana");
+        fruitStrings.add("Orange");
+        fruitStrings.add("Mango");
+        fruitStrings.add("Guava");
+
+        List<Fruit> fruitEnums = new ArrayList<>();
+        fruitEnums.add(Fruit.BANANA);
+        fruitEnums.add(Fruit.ORANGE);
+        fruitEnums.add(Fruit.MANGO);
+        fruitEnums.add(Fruit.GUAVA);
+
+        FormElement element41 = FormElement.<Fruit>createGenericInstance().setType(FormElement.TYPE_SPINNER_DROPDOWN).setTitle("Single Item").setOptions(fruitEnums);
+        FormElement element42 = FormElement.createInstance().setType(FormElement.TYPE_PICKER_MULTI_CHECKBOX).setTitle("Multi Items").setOptions(fruitStrings);
 
         List<FormObject> formItems = new ArrayList<>();
         formItems.add(element11);
@@ -93,6 +119,6 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
 
     @Override
     public void onValueChanged(FormElement formElement) {
-        Toast.makeText(this, formElement.getValue(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, formElement.getValue().toString(), Toast.LENGTH_SHORT).show();
     }
 }

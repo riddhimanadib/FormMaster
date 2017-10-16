@@ -193,7 +193,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             // other wise, it just displays form element with respective type
             FormElement formElement = (FormElement) currentObject;
             holder.mTextViewTitle.setText(formElement.getTitle());
-            holder.mEditTextValue.setText(formElement.getValue());
+            holder.mEditTextValue.setText(formElement.getValueAsString());
             holder.mEditTextValue.setHint(formElement.getHint());
 
             switch (getItemViewType(position)) {
@@ -363,7 +363,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
         // reformat the options in format needed
         final CharSequence[] options = new CharSequence[currentObj.getOptions().size()];
         for (int i = 0; i < currentObj.getOptions().size(); i++) {
-            options[i] = currentObj.getOptions().get(i);
+            options[i] = currentObj.getOptions().get(i).toString();
         }
 
         // prepare the dialog
@@ -372,7 +372,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                 .setItems(options, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         holder.mEditTextValue.setText(options[which]);
-                        currentObj.setValue(options[which].toString());
+                        currentObj.setValue(currentObj.getOptions().get(which));
                         notifyDataSetChanged();
                     }
                 })
@@ -406,10 +406,12 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
         final ArrayList<Integer> mSelectedItems = new ArrayList();
 
         for (int i = 0; i < currentObj.getOptions().size(); i++) {
-            options[i] = currentObj.getOptions().get(i);
+            Object obj = currentObj.getOptions().get(i);
+
+            options[i] = obj.toString();
             optionsSelected[i] = false;
 
-            if (currentObj.getOptionsSelected().contains(options[i])) {
+            if (currentObj.getOptionsSelected().contains(obj)) {
                 optionsSelected[i] = true;
                 mSelectedItems.add(i);
             }
@@ -508,7 +510,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
 
             // get current form element, existing value and new value
             FormElement formElement = (FormElement) mDataset.get(position);
-            String currentValue = formElement.getValue();
+            String currentValue = formElement.getValueAsString();
             String newValue = charSequence.toString();
 
             // trigger event only if the value is changed
@@ -543,7 +545,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             if (clickedPosition >= 0) {
                 // get current form element, existing value and new value
                 FormElement formElement = (FormElement) mDataset.get(clickedPosition);
-                String currentValue = formElement.getValue();
+                String currentValue = formElement.getValue().toString();
                 String newValue = sdfDate.format(mCalendarCurrentDate.getTime());
 
                 // trigger event only if the value is changed
@@ -577,7 +579,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             if (clickedPosition >= 0) {
                 // get current form element, existing value and new value
                 FormElement formElement = (FormElement) mDataset.get(clickedPosition);
-                String currentValue = formElement.getValue();
+                String currentValue = formElement.getValue().toString();
                 String newValue = sdfTime.format(mCalendarCurrentTime.getTime());
 
                 // trigger event only if the value is changed
