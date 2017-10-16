@@ -65,7 +65,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
      * @param formObjects
      */
     public void addElements(List<FormObject> formObjects) {
-        this.mDataset = formObjects;
+        this.mDataset.addAll(formObjects);
     }
 
     /**
@@ -195,6 +195,13 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             holder.mTextViewTitle.setText(formElement.getTitle());
             holder.mEditTextValue.setText(formElement.getValueAsString());
             holder.mEditTextValue.setHint(formElement.getHint());
+            holder.mEditTextValue.setError(formElement.getError());
+
+            if (formElement.isVisible()) {
+                holder.itemView.setVisibility(View.VISIBLE);
+            } else {
+                holder.itemView.setVisibility(View.GONE);
+            }
 
             switch (getItemViewType(position)) {
                 case FormElement.TYPE_EDITTEXT_TEXT_SINGLELINE:
@@ -373,6 +380,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                     public void onClick(DialogInterface dialog, int which) {
                         holder.mEditTextValue.setText(options[which]);
                         currentObj.setValue(currentObj.getOptions().get(which));
+                        currentObj.setError(null); // Reset after value change
                         notifyDataSetChanged();
                     }
                 })
@@ -448,6 +456,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                         }
                         holder.mEditTextValue.setText(s);
                         ((FormElement) mDataset.get(position)).setValue(s);
+                        ((FormElement) mDataset.get(position)).setError(null); // Reset after value change
                         notifyDataSetChanged();
                     }
                 })
@@ -516,6 +525,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
             // trigger event only if the value is changed
             if (!currentValue.equals(newValue)) {
                 formElement.setValue(newValue);
+                formElement.setError(null); // Reset error after text change
                 if (mListener != null)
                     mListener.onValueChanged(formElement);
             }
@@ -551,6 +561,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                 // trigger event only if the value is changed
                 if (!currentValue.equals(newValue)) {
                     formElement.setValue(newValue);
+                    formElement.setError(null); // Reset after value change
                     notifyDataSetChanged();
                     if (mListener != null)
                         mListener.onValueChanged(formElement);
@@ -585,6 +596,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.ViewHolder> {
                 // trigger event only if the value is changed
                 if (!currentValue.equals(newValue)) {
                     formElement.setValue(newValue);
+                    formElement.setError(null); // Reset after value change
                     notifyDataSetChanged();
                     if (mListener != null)
                         mListener.onValueChanged(formElement);

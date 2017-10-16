@@ -29,7 +29,9 @@ public class FormElement<T extends Object> implements FormObject {
     private List<T> mOptions; // list of options for single and multi picker
     private List<T> mOptionsSelected; // list of selected options for single and multi picker
     private String mHint; // value to be shown if mValue is null
+    private String mError;
     private boolean mRequired; // value to set is the field is required
+    private boolean mVisible = true;
 
     public FormElement() {
     }
@@ -76,8 +78,18 @@ public class FormElement<T extends Object> implements FormObject {
         return this;
     }
 
+    public FormElement<T> setError(String error) {
+        this.mError = error;
+        return this;
+    }
+
     public FormElement<T> setRequired(boolean required) {
         this.mRequired = required;
+        return this;
+    }
+
+    public FormElement<T> setVisible(boolean visible) {
+        this.mVisible = visible;
         return this;
     }
 
@@ -115,8 +127,16 @@ public class FormElement<T extends Object> implements FormObject {
         return (this.mHint == null) ? "" : this.mHint;
     }
 
+    public String getError() {
+        return this.mError;
+    }
+
     public boolean isRequired() {
         return this.mRequired;
+    }
+
+    public boolean isVisible() {
+        return this.mVisible;
     }
 
     public List<T> getOptions() {
