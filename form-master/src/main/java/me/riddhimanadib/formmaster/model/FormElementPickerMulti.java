@@ -10,8 +10,10 @@ import java.util.List;
 public class FormElementPickerMulti extends BaseFormElement {
 
     private String pickerTitle; // custom title for picker
-    private List<String> mOptions; // list of options for single and multi picker
-    private List<String> mOptionsSelected; // list of selected options for single and multi picker
+    private List<String> options; // list of options for single and multi picker
+    private List<String> optionsSelected; // list of selected options for single and multi picker
+    private String positiveText = "Ok"; // text for positive operation, like "ok"
+    private String negativeText = "Cancel"; // text for negative operation, like "cancel"
 
     public FormElementPickerMulti() {
     }
@@ -48,12 +50,12 @@ public class FormElementPickerMulti extends BaseFormElement {
 
     // custom setters
     public FormElementPickerMulti setOptions(List<String> mOptions) {
-        this.mOptions = mOptions;
+        this.options = mOptions;
         return this;
     }
 
     public FormElementPickerMulti setOptionsSelected(List<String> mOptionsSelected) {
-        this.mOptionsSelected = mOptionsSelected;
+        this.optionsSelected = mOptionsSelected;
         return this;
     }
 
@@ -64,15 +66,34 @@ public class FormElementPickerMulti extends BaseFormElement {
 
     // custom getters
     public List<String> getOptions() {
-        return (this.mOptions == null) ? new ArrayList<String>() : this.mOptions;
+        return (this.options == null) ? new ArrayList<String>() : this.options;
     }
 
     public List<String> getOptionsSelected() {
-        return (this.mOptionsSelected == null) ? new ArrayList<String>() : this.mOptionsSelected;
+        return (this.optionsSelected == null) ? new ArrayList<String>() : this.optionsSelected;
     }
 
+    public FormElementPickerMulti setPositiveText(String positiveText) {
+        this.positiveText = positiveText;
+        return this;
+    }
+
+    public FormElementPickerMulti setNegativeText(String negativeText) {
+        this.negativeText = negativeText;
+        return this;
+    }
+
+    // custom getters
     public String getPickerTitle() {
         return this.pickerTitle;
+    }
+
+    public String getPositiveText() {
+        return this.positiveText;
+    }
+
+    public String getNegativeText() {
+        return this.negativeText;
     }
 
 }

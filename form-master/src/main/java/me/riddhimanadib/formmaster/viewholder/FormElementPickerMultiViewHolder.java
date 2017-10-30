@@ -62,7 +62,7 @@ public class FormElementPickerMultiViewHolder extends BaseViewHolder {
 
         // prepare the dialog
         final AlertDialog dialog  = new AlertDialog.Builder(context)
-                .setTitle("Pick one or more")
+                .setTitle(mFormElementPickerMulti.getPickerTitle())
                 .setMultiChoiceItems(options, optionsSelected,
                         new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
@@ -77,7 +77,7 @@ public class FormElementPickerMultiViewHolder extends BaseViewHolder {
                             }
                         })
                 // Set the action buttons
-                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                .setPositiveButton(mFormElementPickerMulti.getPositiveText(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         String s = "";
@@ -92,7 +92,7 @@ public class FormElementPickerMultiViewHolder extends BaseViewHolder {
                         mReloadListener.updateValue(position, s);
                     }
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(mFormElementPickerMulti.getNegativeText(), null)
                 .create();
 
         mEditTextValue.setOnClickListener(new View.OnClickListener() {
