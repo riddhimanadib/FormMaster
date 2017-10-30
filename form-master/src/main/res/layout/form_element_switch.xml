@@ -28,20 +28,35 @@
             android:padding="16dp"
             android:textColor="@color/colorFormMasterElementTextTitle"/>
 
-        <android.support.v7.widget.AppCompatEditText
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="3"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:textSize="@dimen/elementTextValueSize"
-            android:gravity="right"
-            android:id="@+id/formElementValue"
-            android:inputType="textNoSuggestions"
-            android:maxLines="1"
-            tools:text="Riddhiman Adib"
-            android:imeOptions="actionNext"
-            android:padding="16dp"
-            android:textColor="@color/colorFormMasterElementTextValue"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="right">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/formElementNegativeText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                tools:text="Ok"
+                android:gravity="center"
+                android:paddingRight="8dp"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/formElementSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/formElementPositiveText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                tools:text="No"
+                android:gravity="center"
+                android:paddingLeft="8dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

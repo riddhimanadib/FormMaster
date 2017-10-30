@@ -15,6 +15,7 @@ import me.riddhimanadib.formmaster.model.FormElementPickerDate;
 import me.riddhimanadib.formmaster.model.FormElementPickerMulti;
 import me.riddhimanadib.formmaster.model.FormElementPickerSingle;
 import me.riddhimanadib.formmaster.model.FormElementPickerTime;
+import me.riddhimanadib.formmaster.model.FormElementSwitch;
 import me.riddhimanadib.formmaster.model.FormElementTextEmail;
 import me.riddhimanadib.formmaster.model.FormElementTextMultiLine;
 import me.riddhimanadib.formmaster.model.FormElementTextNumber;
@@ -87,6 +88,7 @@ public class FullscreenFormActivity extends AppCompatActivity {
         fruits.add("Guava");
         FormElementPickerSingle element41 = FormElementPickerSingle.createInstance().setTitle("Single Item").setOptions(fruits).setPickerTitle("Pick any item");
         FormElementPickerMulti element42 = FormElementPickerMulti.createInstance().setTitle("Multi Items").setOptions(fruits).setPickerTitle("Pick one or more").setNegativeText("reset");
+        FormElementSwitch element43 = FormElementSwitch.createInstance().setTitle("Frozen?").setSwitchTexts("Yes", "No");
 
         List<BaseFormElement> formItems = new ArrayList<>();
         formItems.add(header1);
@@ -103,6 +105,7 @@ public class FullscreenFormActivity extends AppCompatActivity {
         formItems.add(header4);
         formItems.add(element41);
         formItems.add(element42);
+        formItems.add(element43);
         mFormBuilder.addFormElements(formItems);
 
     }
