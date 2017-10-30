@@ -101,8 +101,8 @@ public class FullscreenFormActivity extends AppCompatActivity {
         formItems.add(element32);
         formItems.add(element33);
         formItems.add(header4);
-//        formItems.add(element41);
-//        formItems.add(element42);
+        formItems.add(element41);
+        formItems.add(element42);
         mFormBuilder.addFormElements(formItems);
 
     }
