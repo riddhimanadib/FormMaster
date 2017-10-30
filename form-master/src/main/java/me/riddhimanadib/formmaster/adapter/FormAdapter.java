@@ -16,6 +16,7 @@ import me.riddhimanadib.formmaster.model.BaseFormElement;
 import me.riddhimanadib.formmaster.viewholder.BaseViewHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementHeader;
 import me.riddhimanadib.formmaster.viewholder.FormElementPickerDateViewHolder;
+import me.riddhimanadib.formmaster.viewholder.FormElementPickerMultiViewHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementPickerSingleViewHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementPickerTimeViewHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementTextEmailViewHolder;
@@ -64,8 +65,6 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
         this.mDataset.add(formObject);
         notifyDataSetChanged();
     }
-
-    // TODO: add element at index
 
     /**
      * set value for any unique index
@@ -195,6 +194,9 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
             case BaseFormElement.TYPE_PICKER_SINGLE:
                 v = inflater.inflate(R.layout.form_element, parent, false);
                 return new FormElementPickerSingleViewHolder(v, mContext, this);
+            case BaseFormElement.TYPE_PICKER_MULTI:
+                v = inflater.inflate(R.layout.form_element, parent, false);
+                return new FormElementPickerMultiViewHolder(v, mContext, this);
             default:
                 v = inflater.inflate(R.layout.form_element, parent, false);
                 return new FormElementTextSingleLineViewHolder(v, new FormItemEditTextListener(this));
@@ -217,62 +219,6 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
         // gets current object
         BaseFormElement currentObject = mDataset.get(position);
         holder.bind(position, currentObject, mContext);
-
-        /*// shows header view if it's a header
-        if (getItemViewType(position) == IS_HEADER_VIEW) {
-            FormHeader formHeader = (FormHeader) currentObject;
-            holder.mTextViewTitle.setText(formHeader.getTitle());
-        } else {
-            // other wise, it just displays form element with respective type
-            BaseFormElement baseFormElement = currentObject;
-            holder.mTextViewTitle.setText(baseFormElement.getTitle());
-            holder.mEditTextValue.setText(baseFormElement.getValue());
-            holder.mEditTextValue.setHint(baseFormElement.getHint());
-
-            switch (getItemViewType(position)) {
-                case BaseFormElement.TYPE_EDITTEXT_TEXT_SINGLELINE:
-                    holder.mEditTextValue.setMaxLines(1);
-                    setEditTextFocusEnabled(holder);
-                    break;
-                case BaseFormElement.TYPE_EDITTEXT_TEXT_MULTILINE:
-                    holder.mEditTextValue.setSingleLine(false);
-                    holder.mEditTextValue.setMaxLines(4);
-                  setEditTextFocusEnabled(holder);
-                    break;
-                case BaseFormElement.TYPE_EDITTEXT_NUMBER:
-                    holder.mEditTextValue.setRawInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-                    setEditTextFocusEnabled(holder);
-                    break;
-                case BaseFormElement.TYPE_EDITTEXT_EMAIL:
-                    holder.mEditTextValue.setRawInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-                    setEditTextFocusEnabled(holder);
-                    break;
-                case BaseFormElement.TYPE_EDITTEXT_PHONE:
-                    holder.mEditTextValue.setRawInputType(InputType.TYPE_CLASS_PHONE|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-                    setEditTextFocusEnabled(holder);
-                    break;
-                case BaseFormElement.TYPE_EDITTEXT_PASSWORD:
-                    holder.mEditTextValue.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    holder.mEditTextValue.setSelection(holder.mEditTextValue.getText().length());
-                    setEditTextFocusEnabled(holder);
-                    break;
-                case BaseFormElement.TYPE_PICKER_DATE:
-                    setDatePicker(holder, position);
-                    break;
-                case BaseFormElement.TYPE_PICKER_TIME:
-                    setTimePicker(holder, position);
-                    break;
-                case BaseFormElement.TYPE_PICKER_SINGLE:
-                    setSingleOptionsDialog(holder, position);
-                    break;
-                case BaseFormElement.TYPE_PICKER_MULTI:
-                    setMultipleOptionsDialog(holder, position);
-                    break;
-                default:
-                    break;
-            }
-        }*/
-
     }
 
     @Override
