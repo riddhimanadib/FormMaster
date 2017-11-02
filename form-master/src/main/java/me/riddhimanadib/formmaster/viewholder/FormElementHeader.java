@@ -8,6 +8,7 @@ import me.riddhimanadib.formmaster.R;
 import me.riddhimanadib.formmaster.model.BaseFormElement;
 
 /**
+ * ViewHolder for Header
  * Created by Riddhi - Rudra on 30-Jul-17.
  */
 

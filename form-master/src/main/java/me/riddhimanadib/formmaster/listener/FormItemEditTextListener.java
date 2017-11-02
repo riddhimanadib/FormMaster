@@ -7,6 +7,7 @@ import me.riddhimanadib.formmaster.adapter.FormAdapter;
 import me.riddhimanadib.formmaster.model.BaseFormElement;
 
 /**
+ * Edit text listener for form element edit texts
  * Created by Riddhi - Rudra on 30-Jul-17.
  */
 

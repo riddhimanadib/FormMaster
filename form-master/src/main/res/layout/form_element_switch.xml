@@ -33,7 +33,8 @@
             android:layout_weight="3"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:gravity="right">
+            android:gravity="right"
+            android:paddingRight="16dp">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/formElementNegativeText"
@@ -41,7 +42,8 @@
                 android:layout_height="match_parent"
                 tools:text="Ok"
                 android:gravity="center"
-                android:paddingRight="8dp"/>
+                android:paddingRight="8dp"
+                android:textColor="#000000"/>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/formElementSwitch"
@@ -54,7 +56,8 @@
                 android:layout_height="match_parent"
                 tools:text="No"
                 android:gravity="center"
-                android:paddingLeft="8dp"/>
+                android:paddingLeft="8dp"
+                android:textColor="#000000"/>
 
         </LinearLayout>
 

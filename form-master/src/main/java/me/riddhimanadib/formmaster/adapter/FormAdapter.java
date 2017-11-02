@@ -29,7 +29,7 @@ import me.riddhimanadib.formmaster.viewholder.FormElementTextSingleLineViewHolde
 import me.riddhimanadib.formmaster.listener.ReloadListener;
 
 /**
- * The adpater the holds and displays the form objects
+ * The adapter the holds and displays the form objects
  * Created by Adib on 16-Apr-17.
  */
 
@@ -118,7 +118,7 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
     }
 
     /**
-     * get wholde dataset
+     * get whole dataset
      * @return
      */
     public List<BaseFormElement> getDataset() {
@@ -225,6 +225,11 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
         holder.bind(position, currentObject, mContext);
     }
 
+    /**
+     * use the listener to update value and notify dataset changes to adapter
+     * @param position
+     * @param updatedValue
+     */
     @Override
     public void updateValue(int position, String updatedValue) {
         mDataset.get(position).setValue(updatedValue);

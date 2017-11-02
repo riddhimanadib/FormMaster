@@ -9,13 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/buttonFullScreenActivity"
-        android:text="full screen form" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonPartialScreenActivity"
-        android:text="partial screen form" />
+        android:text="sample form" />
 
     <Button
         android:layout_width="match_parent"
