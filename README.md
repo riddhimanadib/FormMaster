@@ -1,5 +1,7 @@
 # Form-Master
 
+[ ![Download](https://api.bintray.com/packages/adib2149/maven/form-master/images/download.svg) ](https://bintray.com/adib2149/maven/form-master/_latestVersion)
+
 > Easily build big and bigger forms with minimal effort
 
 ![](https://github.com/adib2149/FormMaster/blob/master/screenshot/screenshot1.gif)
@@ -17,7 +19,7 @@ This library aids in building bigger forms on-the-fly. Forms with large number o
 ## Installation
 Add this in your app's **build.gradle** file:
 ```
-compile 'me.riddhimanadib.form-master:form-master:1.0.2'
+compile 'me.riddhimanadib.form-master:form-master:1.1.0'
 ```
 
 
@@ -50,9 +52,9 @@ mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 mFormBuilder = new FormBuildHelper(this, mRecyclerView);
 
 // declare form elements
-FormHeader header = FormHeader.createInstance().setTitle("Personal Info");
-FormElement element = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_EMAIL).setTitle("Email");
-
+FormHeader header = FormHeader.createInstance("Personal Info");
+FormElementTextEmail element = FormElementTextEmail.createInstance().setTitle("Email").setHint("Enter Email");
+        
 // add them in a list
 List<FormObject> formItems = new ArrayList<>();
 formItems.add(header);
@@ -64,6 +66,15 @@ mFormBuilder.refreshView();
 ```
 3. Now build and run!!
 
+### Changelog
+
+####v1.1.0
+1. New FormElement type: Switch.
+2. New way to define the form elements.
+2. Can set Titles in alert dialogs for Date and Time type form element.
+3. Can set Positive and negative texts for Date, Time and Switch type form elements.
+4. Can set Date and Time formats (if unset, default format will be used).
+
 
 ## Reference
 
@@ -71,14 +82,14 @@ mFormBuilder.refreshView();
 
 #### Header:
 ``` 'java'
-FormHeader header = FormHeader.createInstance().setTitle("Personal Info");
+FormHeader header = FormHeader.createInstance("Personal Info");
 ```
 
 #### Regular Elements:
  
 **General object format**
 ``` 'java'
-FormElement element = FormElement.createInstance()
+<Class> element = <Class>.createInstance()
     .setTag(101123151) // optional tag to uniquely identify the elemnt for later use
     .setType(FormElement.TYPE_PICKER_MULTI_CHECKBOX) // setting input type
     .setTitle("Pick your favourite fruit") // setting title
@@ -91,28 +102,31 @@ FormElement element = FormElement.createInstance()
 **Samples:**
 ``` 'java'
 // email input
-FormElement element = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_EMAIL).setTitle("Email");
+FormElementTextEmail element = FormElementTextEmail.createInstance().setTitle("Email").setHint("Enter Email");
 
 // phone number input
-FormElement element = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_PHONE).setTitle("Phone");
+FormElementTextPhone element = FormElementTextPhone.createInstance().setTitle("Phone").setValue("+8801712345678");
 
 // single line text input
-FormElement element = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_TEXT_SINGLELINE).setTitle("Location");
+FormElementTextSingleLine element = FormElementTextSingleLine.createInstance().setTitle("Location").setValue("Dhaka");
 
 // multi line text input (default 4)
-FormElement element = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_TEXT_MULTILINE).setTitle("Address");
+FormElementTextMultiLine element = FormElementTextMultiLine.createInstance().setTitle("Address");
 
 // number element input
-FormElement element = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_NUMBER).setTitle("Zip Code");
+FormElementTextNumber element = FormElementTextNumber.createInstance().setTitle("Zip Code").setValue("1000");
 
 // date picker input
-FormElement element = FormElement.createInstance().setType(FormElement.TYPE_PICKER_DATE).setTitle("Date");
+FormElementPickerDate element = FormElementPickerDate.createInstance().setTitle("Date").setDateFormat("MMM dd, yyyy");
 
 // time picker input
-FormElement element = FormElement.createInstance().setType(FormElement.TYPE_PICKER_TIME).setTitle("Time");
+FormElementPickerTime element = FormElementPickerTime.createInstance().setTitle("Time").setTimeFormat("KK hh");
 
 // password input
-FormElement element = FormElement.createInstance().setType(FormElement.TYPE_EDITTEXT_PASSWORD).setTitle("Password");
+FormElementTextPassword element = FormElementTextPassword.createInstance().setTitle("Password").setValue("abcd1234");
+
+// switch input
+FormElementSwitch element = FormElementSwitch.createInstance().setTitle("Frozen?").setSwitchTexts("Yes", "No");
 
 // single item picker input
 List<String> fruits = new ArrayList<>();
@@ -120,7 +134,7 @@ fruits.add("Banana");
 fruits.add("Orange");
 fruits.add("Mango");
 fruits.add("Guava");
-FormElement element = FormElement.createInstance().setType(FormElement.TYPE_SPINNER_DROPDOWN).setTitle("Single Item").setOptions(fruits);
+FormElementPickerSingle element = FormElementPickerSingle.createInstance().setTitle("Single Item").setOptions(fruits).setPickerTitle("Pick any item");
 
 // multiple items picker input
 List<String> fruits = new ArrayList<>();
@@ -128,7 +142,7 @@ fruits.add("Banana");
 fruits.add("Orange");
 fruits.add("Mango");
 fruits.add("Guava");
-FormElement element = FormElement.createInstance().setType(FormElement.TYPE_PICKER_MULTI_CHECKBOX).setTitle("Multi Items").setOptions(fruits);
+FormElementPickerMulti element = FormElementPickerMulti.createInstance().setTitle("Multi Items").setOptions(fruits).setPickerTitle("Pick one or more").setNegativeText("reset");
 ```
 
 ### Set form element value change listener to get changed value instantly
