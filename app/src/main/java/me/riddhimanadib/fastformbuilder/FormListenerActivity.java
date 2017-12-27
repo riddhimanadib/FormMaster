@@ -11,8 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.riddhimanadib.formmaster.FormBuilder;
+import me.riddhimanadib.formmaster.listener.OnActionListener;
 import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.BaseFormElement;
+import me.riddhimanadib.formmaster.model.FormElementButton;
+import me.riddhimanadib.formmaster.model.FormElementLabel;
 import me.riddhimanadib.formmaster.model.FormElementPickerDate;
 import me.riddhimanadib.formmaster.model.FormElementPickerMulti;
 import me.riddhimanadib.formmaster.model.FormElementPickerSingle;
@@ -26,7 +29,7 @@ import me.riddhimanadib.formmaster.model.FormElementTextPhone;
 import me.riddhimanadib.formmaster.model.FormElementTextSingleLine;
 import me.riddhimanadib.formmaster.model.FormHeader;
 
-public class FormListenerActivity extends AppCompatActivity implements OnFormElementValueChangedListener {
+public class FormListenerActivity extends AppCompatActivity implements OnFormElementValueChangedListener, OnActionListener {
 
     private RecyclerView mRecyclerView;
     private FormBuilder mFormBuilder;
@@ -66,7 +69,7 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
     private void setupForm() {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mFormBuilder = new FormBuilder(this, mRecyclerView, this);
+        mFormBuilder = new FormBuilder(this, mRecyclerView, this, this);
 
         FormHeader header1 = FormHeader.createInstance("Personal Info");
         FormElementTextEmail element11 = FormElementTextEmail.createInstance().setTitle("Email").setHint("Enter Email");
@@ -92,6 +95,10 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
         FormElementPickerMulti element42 = FormElementPickerMulti.createInstance().setTitle("Multi Items").setOptions(fruits).setPickerTitle("Pick one or more").setNegativeText("reset");
         FormElementSwitch element43 = FormElementSwitch.createInstance().setTitle("Frozen?").setSwitchTexts("Yes", "No");
 
+        FormHeader header5 = FormHeader.createInstance("New Elements");
+        FormElementLabel element51 = FormElementLabel.createInstance("Label");
+        FormElementButton element52 = FormElementButton.createInstance("Action");
+
         List<BaseFormElement> formItems = new ArrayList<>();
         formItems.add(header1);
         formItems.add(element11);
@@ -108,6 +115,9 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
         formItems.add(element41);
         formItems.add(element42);
         formItems.add(element43);
+        formItems.add(header5);
+        formItems.add(element51);
+        formItems.add(element52);
         mFormBuilder.addFormElements(formItems);
 
     }
@@ -115,5 +125,10 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
     @Override
     public void onValueChanged(BaseFormElement formElement) {
         Toast.makeText(this, formElement.getValue(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAction(BaseFormElement formElement) {
+        Toast.makeText(this, formElement.getTitle(), Toast.LENGTH_SHORT).show();
     }
 }
