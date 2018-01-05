@@ -21,6 +21,7 @@ public class BaseFormElement {
     public static final int TYPE_SWITCH = 11;
     public static final int TYPE_LABEL = 12;
     public static final int TYPE_BUTTON = 13;
+    public static final int TYPE_CLICKABLE_LABEL = 14;
 
     // private variables
     private int mTag; // unique tag to identify the object

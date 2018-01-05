@@ -16,6 +16,7 @@ import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.BaseFormElement;
 import me.riddhimanadib.formmaster.viewholder.BaseViewHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementButtonHolder;
+import me.riddhimanadib.formmaster.viewholder.FormElementClickableLabelHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementHeader;
 import me.riddhimanadib.formmaster.viewholder.FormElementLabelHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementPickerDateViewHolder;
@@ -212,6 +213,9 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
             case BaseFormElement.TYPE_BUTTON:
                 v = inflater.inflate(R.layout.form_element_button, parent, false);
                 return new FormElementButtonHolder(v, mOnActionListener);
+            case BaseFormElement.TYPE_CLICKABLE_LABEL:
+                v = inflater.inflate(R.layout.form_element_clickable_label, parent, false);
+                return new FormElementClickableLabelHolder(v, mOnActionListener);
             default:
                 v = inflater.inflate(R.layout.form_element, parent, false);
                 return new FormElementTextSingleLineViewHolder(v, new FormItemEditTextListener(this));
