@@ -10,11 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.riddhimanadib.formmaster.R;
+import me.riddhimanadib.formmaster.listener.OnActionListener;
 import me.riddhimanadib.formmaster.listener.FormItemEditTextListener;
 import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.BaseFormElement;
 import me.riddhimanadib.formmaster.viewholder.BaseViewHolder;
+import me.riddhimanadib.formmaster.viewholder.FormElementButtonHolder;
+import me.riddhimanadib.formmaster.viewholder.FormElementClickableLabelHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementHeader;
+import me.riddhimanadib.formmaster.viewholder.FormElementLabelHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementPickerDateViewHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementPickerMultiViewHolder;
 import me.riddhimanadib.formmaster.viewholder.FormElementPickerSingleViewHolder;
@@ -38,14 +42,16 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
     private Context mContext;
     private List<BaseFormElement> mDataset;
     private OnFormElementValueChangedListener mListener;
+    private OnActionListener mOnActionListener;
 
     /**
      * public constructor with context
      * @param context
      */
-    public FormAdapter(Context context, OnFormElementValueChangedListener listener) {
+    public FormAdapter(Context context, OnFormElementValueChangedListener listener, OnActionListener onActionListener) {
         mContext = context;
         mListener = listener;
+        mOnActionListener = onActionListener;
         mDataset = new ArrayList<>();
     }
 
@@ -201,6 +207,15 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
             case BaseFormElement.TYPE_SWITCH:
                 v = inflater.inflate(R.layout.form_element_switch, parent, false);
                 return new FormElementSwitchViewHolder(v, mContext, this);
+            case BaseFormElement.TYPE_LABEL:
+                v = inflater.inflate(R.layout.form_element_label, parent, false);
+                return new FormElementLabelHolder(v);
+            case BaseFormElement.TYPE_BUTTON:
+                v = inflater.inflate(R.layout.form_element_button, parent, false);
+                return new FormElementButtonHolder(v, mOnActionListener);
+            case BaseFormElement.TYPE_CLICKABLE_LABEL:
+                v = inflater.inflate(R.layout.form_element_clickable_label, parent, false);
+                return new FormElementClickableLabelHolder(v, mOnActionListener);
             default:
                 v = inflater.inflate(R.layout.form_element, parent, false);
                 return new FormElementTextSingleLineViewHolder(v, new FormItemEditTextListener(this));

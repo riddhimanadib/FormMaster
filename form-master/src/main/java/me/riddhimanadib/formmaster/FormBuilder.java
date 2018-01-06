@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import java.util.List;
 
 import me.riddhimanadib.formmaster.adapter.FormAdapter;
+import me.riddhimanadib.formmaster.listener.OnActionListener;
 import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.BaseFormElement;
 
@@ -26,7 +27,11 @@ public class FormBuilder {
      * @param recyclerView
      */
     public FormBuilder(Context context, RecyclerView recyclerView) {
-        initializeFormBuildHelper(context, recyclerView, null);
+        initializeFormBuildHelper(context, recyclerView, null, null);
+    }
+
+    public FormBuilder(Context context, RecyclerView recyclerView, OnActionListener onActionListener) {
+        initializeFormBuildHelper(context, recyclerView, null, null);
     }
 
     /**
@@ -35,7 +40,16 @@ public class FormBuilder {
      * @param recyclerView
      */
     public FormBuilder(Context context, RecyclerView recyclerView, OnFormElementValueChangedListener listener) {
-        initializeFormBuildHelper(context, recyclerView, listener);
+        initializeFormBuildHelper(context, recyclerView, listener, null);
+    }
+
+    /**
+     * constructor with listener callback for changed values
+     * @param context
+     * @param recyclerView
+     */
+    public FormBuilder(Context context, RecyclerView recyclerView, OnFormElementValueChangedListener listener, OnActionListener onActionListener) {
+        initializeFormBuildHelper(context, recyclerView, listener, onActionListener);
     }
 
     /**
@@ -44,10 +58,10 @@ public class FormBuilder {
      * @param recyclerView
      * @param listener
      */
-    private void initializeFormBuildHelper(Context context, RecyclerView recyclerView, OnFormElementValueChangedListener listener) {
+    private void initializeFormBuildHelper(Context context, RecyclerView recyclerView, OnFormElementValueChangedListener listener, OnActionListener onActionListener) {
 
         // initialize form adapter
-        this.mFormAdapter = new FormAdapter(context, listener);
+        this.mFormAdapter = new FormAdapter(context, listener, onActionListener);
 
         // set up the recyclerview with adapter
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
