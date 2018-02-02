@@ -3,8 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FormMaster.iml" filepath="$PROJECT_DIR$/FormMaster.iml" />
+      <module fileurl="file://C:\Users\merhawi.fissehaye\Desktop\FormMaster\FormMaster.iml" filepath="C:\Users\merhawi.fissehaye\Desktop\FormMaster\FormMaster.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\merhawi.fissehaye\Desktop\FormMaster\app\app.iml" filepath="C:\Users\merhawi.fissehaye\Desktop\FormMaster\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/form-master/form-master.iml" filepath="$PROJECT_DIR$/form-master/form-master.iml" />
+      <module fileurl="file://C:\Users\merhawi.fissehaye\Desktop\FormMaster\form-master\form-master.iml" filepath="C:\Users\merhawi.fissehaye\Desktop\FormMaster\form-master\form-master.iml" />
     </modules>
   </component>
 </project>
