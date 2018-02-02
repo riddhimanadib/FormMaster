@@ -93,4 +93,9 @@ public class FormBuilder {
         return true;
     }
 
+    public void refresh() {
+        if(mFormAdapter != null) {
+            mFormAdapter.notifyDataSetChanged();
+        }
+    }
 }
