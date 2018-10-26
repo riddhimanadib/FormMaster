@@ -6,25 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.Toast;
+import me.riddhimanadib.formmaster.FormBuilder;
+import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
+import me.riddhimanadib.formmaster.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.riddhimanadib.formmaster.FormBuilder;
-import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
-import me.riddhimanadib.formmaster.model.BaseFormElement;
-import me.riddhimanadib.formmaster.model.FormElementPickerDate;
-import me.riddhimanadib.formmaster.model.FormElementPickerMulti;
-import me.riddhimanadib.formmaster.model.FormElementPickerSingle;
-import me.riddhimanadib.formmaster.model.FormElementPickerTime;
-import me.riddhimanadib.formmaster.model.FormElementSwitch;
-import me.riddhimanadib.formmaster.model.FormElementTextEmail;
-import me.riddhimanadib.formmaster.model.FormElementTextMultiLine;
-import me.riddhimanadib.formmaster.model.FormElementTextNumber;
-import me.riddhimanadib.formmaster.model.FormElementTextPassword;
-import me.riddhimanadib.formmaster.model.FormElementTextPhone;
-import me.riddhimanadib.formmaster.model.FormElementTextSingleLine;
-import me.riddhimanadib.formmaster.model.FormHeader;
 
 public class FormListenerActivity extends AppCompatActivity implements OnFormElementValueChangedListener {
 
@@ -88,9 +75,19 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
         fruits.add("Orange");
         fruits.add("Mango");
         fruits.add("Guava");
-        FormElementPickerSingle element41 = FormElementPickerSingle.createInstance().setTitle("Single Item").setOptions(fruits).setPickerTitle("Pick any item");
-        FormElementPickerMulti element42 = FormElementPickerMulti.createInstance().setTitle("Multi Items").setOptions(fruits).setPickerTitle("Pick one or more").setNegativeText("reset");
-        FormElementSwitch element43 = FormElementSwitch.createInstance().setTitle("Frozen?").setSwitchTexts("Yes", "No");
+
+        FormElementPickerSingle element41 = FormElementPickerSingle.createInstance()
+                .setTitle("Single Item")
+                .setOptions(fruits)
+                .setPickerTitle("Pick any item");
+        FormElementPickerMulti element42 = FormElementPickerMulti.createInstance()
+                .setTitle("Multi Items")
+                .setOptions(fruits)
+                .setPickerTitle("Pick one or more")
+                .setNegativeText("reset");
+        FormElementSwitch element43 = FormElementSwitch.createInstance()
+                .setTitle("Frozen?")
+                .setSwitchTexts("Yes", "No");
 
         List<BaseFormElement> formItems = new ArrayList<>();
         formItems.add(header1);
@@ -114,6 +111,10 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
 
     @Override
     public void onValueChanged(BaseFormElement formElement) {
-        Toast.makeText(this, formElement.getValue(), Toast.LENGTH_SHORT).show();
+        if (formElement instanceof FormElementPickerSingle) {
+            Toast.makeText(this, formElement.getValue() + " " + ((FormElementPickerSingle) formElement).getSelectedIndex(), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, formElement.getValue(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
