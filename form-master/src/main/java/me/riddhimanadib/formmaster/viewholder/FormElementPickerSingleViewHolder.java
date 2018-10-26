@@ -55,6 +55,7 @@ public class FormElementPickerSingleViewHolder extends BaseViewHolder {
                 public void onClick(DialogInterface dialog, int which) {
                     mEditTextValue.setText(options[which]);
                     mFormElementPickerSingle.setValue(options[which].toString());
+                    mFormElementPickerSingle.setSelectedIndex(which);
                     mReloadListener.updateValue(position, options[which].toString());
                 }
             })
