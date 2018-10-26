@@ -10,8 +10,8 @@ import java.util.List;
 public class FormElementPickerSingle extends BaseFormElement {
 
     private String pickerTitle; // custom title for picker
-    private List<String> mOptions; // list of options for single and multi picker
-    private List<String> mOptionsSelected; // list of selected options for single and multi picker
+    private List mOptions; // list of options for single and multi picker
+    private List mOptionsSelected; // list of selected options for single and multi picker
     private int selectedIndex;
 
     public FormElementPickerSingle() {
@@ -49,12 +49,12 @@ public class FormElementPickerSingle extends BaseFormElement {
     }
 
     // custom setters
-    public FormElementPickerSingle setOptions(List<String> mOptions) {
+    public FormElementPickerSingle setOptions(List mOptions) {
         this.mOptions = mOptions;
         return this;
     }
 
-    public FormElementPickerSingle setOptionsSelected(List<String> mOptionsSelected) {
+    public FormElementPickerSingle setOptionsSelected(List mOptionsSelected) {
         this.mOptionsSelected = mOptionsSelected;
         return this;
     }
@@ -65,12 +65,12 @@ public class FormElementPickerSingle extends BaseFormElement {
     }
 
     // custom getters
-    public List<String> getOptions() {
-        return (this.mOptions == null) ? new ArrayList<String>() : this.mOptions;
+    public List getOptions() {
+        return (this.mOptions == null) ? new ArrayList<>() : this.mOptions;
     }
 
-    public List<String> getOptionsSelected() {
-        return (this.mOptionsSelected == null) ? new ArrayList<String>() : this.mOptionsSelected;
+    public List getOptionsSelected() {
+        return (this.mOptionsSelected == null) ? new ArrayList<>() : this.mOptionsSelected;
     }
 
     public String getPickerTitle() {
