@@ -1,5 +1,8 @@
 package me.riddhimanadib.fastformbuilder.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Student {
     private String uuid;
     private String name;
@@ -23,6 +26,15 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static List<Student> generateSampleStudents(){
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("abc","Kakama Victor"));
+        students.add(new Student("cde","Favor Atuheire"));
+        students.add(new Student("fgh","Ariella Atwiine"));
+        students.add(new Student("ijk","Onyx Kakama"));
+        return students;
     }
 
     @Override

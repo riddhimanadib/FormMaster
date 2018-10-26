@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.Toast;
+import me.riddhimanadib.fastformbuilder.model.Student;
 import me.riddhimanadib.formmaster.FormBuilder;
 import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
 import me.riddhimanadib.formmaster.model.*;
@@ -17,6 +18,7 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
 
     private RecyclerView mRecyclerView;
     private FormBuilder mFormBuilder;
+    List<Student> students = Student.generateSampleStudents();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,7 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
 
         FormElementPickerSingle element41 = FormElementPickerSingle.createInstance()
                 .setTitle("Single Item")
-                .setOptions(fruits)
+                .setOptions(students)
                 .setPickerTitle("Pick any item");
         FormElementPickerMulti element42 = FormElementPickerMulti.createInstance()
                 .setTitle("Multi Items")
@@ -112,7 +114,8 @@ public class FormListenerActivity extends AppCompatActivity implements OnFormEle
     @Override
     public void onValueChanged(BaseFormElement formElement) {
         if (formElement instanceof FormElementPickerSingle) {
-            Toast.makeText(this, formElement.getValue() + " " + ((FormElementPickerSingle) formElement).getSelectedIndex(), Toast.LENGTH_SHORT).show();
+            int selectedIndex = ((FormElementPickerSingle) formElement).getSelectedIndex();
+            Toast.makeText(this, formElement.getValue() + ": " + students.get(selectedIndex).getUuid(), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, formElement.getValue(), Toast.LENGTH_SHORT).show();
         }
