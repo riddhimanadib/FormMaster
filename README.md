@@ -19,7 +19,7 @@ This library aids in building bigger forms on-the-fly. Forms with large number o
 ## Installation
 Add this in your app's **build.gradle** file:
 ```
-compile 'me.riddhimanadib.form-master:form-master:1.1.0'
+implementation 'me.riddhimanadib.form-master:form-master:1.1.0'
 ```
 
 
@@ -49,7 +49,7 @@ compile 'me.riddhimanadib.form-master:form-master:1.1.0'
 ``` 'java'
 // initialize variables
 mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-mFormBuilder = new FormBuildHelper(this, mRecyclerView);
+mFormBuilder = new FormBuilder(this, mRecyclerView);
 
 // declare form elements
 FormHeader header = FormHeader.createInstance("Personal Info");
@@ -62,7 +62,6 @@ formItems.add(element);
 
 // build and display the form
 mFormBuilder.addFormElements(formItems);
-mFormBuilder.refreshView();
 ```
 3. Now build and run!!
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import me.riddhimanadib.formmaster.FormBuilder;
@@ -18,8 +19,8 @@ import me.riddhimanadib.formmaster.model.FormElementTextPassword;
 
 public class LoginFormActivity extends AppCompatActivity {
 
-    private static final int TAG_EMAIL = 12;
-    private static final int TAG_PASSWORD = 2234;
+    private static final String TAG_EMAIL = "email";
+    private static final String TAG_PASSWORD = "password";
 
     private RecyclerView mRecyclerView;
     private FormBuilder mFormBuilder;
@@ -40,6 +41,22 @@ public class LoginFormActivity extends AppCompatActivity {
                     BaseFormElement loginElement = mFormBuilder.getFormElement(TAG_EMAIL);
                     BaseFormElement passwordElement = mFormBuilder.getFormElement(TAG_PASSWORD);
                     Toast.makeText(LoginFormActivity.this, "Do whatever you want with this data\n" + loginElement.getValue() + "\n" + passwordElement.getValue(), Toast.LENGTH_SHORT).show();
+
+                    // getFormElementIterator
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (Iterator<BaseFormElement> iterator = mFormBuilder.getFormElementIterator(); iterator.hasNext(); ) {
+                        BaseFormElement baseFormElement = iterator.next();
+                        stringBuilder.append(baseFormElement.getTag());
+                        stringBuilder.append(":");
+                        stringBuilder.append(baseFormElement.getValue());
+                    }
+                    Toast.makeText(LoginFormActivity.this, stringBuilder.toString(), Toast.LENGTH_SHORT).show();
+
+                    // convertToDataMap
+                    Toast.makeText(LoginFormActivity.this, mFormBuilder.convertToDataMap().toString(), Toast.LENGTH_SHORT).show();
+
+
+
                 } else {
                     Toast.makeText(LoginFormActivity.this, "Invalid form data", Toast.LENGTH_SHORT).show();
                 }

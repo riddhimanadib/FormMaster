@@ -15,7 +15,7 @@ public class FormElementTextPassword extends BaseFormElement {
         return FormElementTextPassword;
     }
 
-    public FormElementTextPassword setTag(int mTag) {
+    public FormElementTextPassword setTag(String mTag) {
         return (FormElementTextPassword)  super.setTag(mTag);
     }
 

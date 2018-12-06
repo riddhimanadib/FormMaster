@@ -15,7 +15,7 @@ public class FormElementTextSingleLine extends BaseFormElement {
         return formElementTextSingleLine;
     }
 
-    public FormElementTextSingleLine setTag(int mTag) {
+    public FormElementTextSingleLine setTag(String mTag) {
         return (FormElementTextSingleLine)  super.setTag(mTag);
     }
 

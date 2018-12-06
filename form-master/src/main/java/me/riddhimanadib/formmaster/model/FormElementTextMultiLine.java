@@ -15,7 +15,7 @@ public class FormElementTextMultiLine extends BaseFormElement {
         return FormElementTextMultiLine;
     }
 
-    public FormElementTextMultiLine setTag(int mTag) {
+    public FormElementTextMultiLine setTag(String mTag) {
         return (FormElementTextMultiLine)  super.setTag(mTag);
     }
 

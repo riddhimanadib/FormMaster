@@ -15,7 +15,7 @@ public class FormElementTextEmail extends BaseFormElement {
         return FormElementTextEmail;
     }
 
-    public FormElementTextEmail setTag(int mTag) {
+    public FormElementTextEmail setTag(String mTag) {
         return (FormElementTextEmail)  super.setTag(mTag);
     }
 

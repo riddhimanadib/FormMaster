@@ -6,7 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 import me.riddhimanadib.formmaster.adapter.FormAdapter;
 import me.riddhimanadib.formmaster.listener.OnFormElementValueChangedListener;
@@ -73,9 +77,31 @@ public class FormBuilder {
      * @param tag
      * @return
      */
-    public BaseFormElement getFormElement(int tag) {
+    public BaseFormElement getFormElement(String tag) {
         return this.mFormAdapter.getValueAtTag(tag);
     }
+
+    /**
+     * get the Iterator
+     * @return
+     */
+    public Iterator<BaseFormElement> getFormElementIterator() {
+        return this.mFormAdapter.getIterator();
+    }
+
+    /**
+     * convert to a map which key is tag
+     * @return
+     */
+    public Map<String,String> convertToDataMap() {
+        Map<String, String> dataSetMap = new HashMap<>(mFormAdapter.getItemCount());
+        for (Iterator<BaseFormElement> iterator = getFormElementIterator(); iterator.hasNext(); ) {
+            BaseFormElement baseFormElement = iterator.next();
+            dataSetMap.put(baseFormElement.getTag(), baseFormElement.getValue());
+        }
+        return dataSetMap;
+    }
+
 
     /**
      *

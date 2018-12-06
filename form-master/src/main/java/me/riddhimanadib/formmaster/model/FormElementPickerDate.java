@@ -21,7 +21,7 @@ public class FormElementPickerDate extends BaseFormElement {
         return formElementPickerDate;
     }
 
-    public FormElementPickerDate setTag(int mTag) {
+    public FormElementPickerDate setTag(String mTag) {
         return (FormElementPickerDate)  super.setTag(mTag);
     }
 

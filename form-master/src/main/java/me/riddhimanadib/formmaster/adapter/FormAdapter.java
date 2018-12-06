@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import me.riddhimanadib.formmaster.R;
 import me.riddhimanadib.formmaster.listener.FormItemEditTextListener;
@@ -83,9 +86,9 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
      * @param tag
      * @param value
      */
-    public void setValueAtTag(int tag, String value) {
+    public void setValueAtTag(String tag, String value) {
         for (BaseFormElement f : this.mDataset) {
-            if (f.getTag() == tag) {
+            if (f.getTag().equals(tag)) {
                 f.setValue(value);
                 return;
             }
@@ -107,9 +110,9 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
      * @param tag
      * @return
      */
-    public BaseFormElement getValueAtTag(int tag) {
+    public BaseFormElement getValueAtTag(String tag) {
         for (BaseFormElement f : this.mDataset) {
-            if (f.getTag() == tag) {
+            if (f.getTag().equals(tag)) {
                 return f;
             }
         }
@@ -123,6 +126,14 @@ public class FormAdapter extends RecyclerView.Adapter<BaseViewHolder> implements
      */
     public List<BaseFormElement> getDataset() {
         return mDataset;
+    }
+
+    /**
+     * gets the iterator of dataset
+     * @return
+     */
+    public Iterator<BaseFormElement> getIterator() {
+        return mDataset.iterator();
     }
 
     /**
