@@ -24,7 +24,7 @@ public class FormElementPickerMulti extends BaseFormElement {
         return FormElementPickerMulti;
     }
 
-    public FormElementPickerMulti setTag(int mTag) {
+    public FormElementPickerMulti setTag(String mTag) {
         return (FormElementPickerMulti)  super.setTag(mTag);
     }
 

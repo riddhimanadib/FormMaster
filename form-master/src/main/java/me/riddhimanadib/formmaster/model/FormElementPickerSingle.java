@@ -23,7 +23,7 @@ public class FormElementPickerSingle extends BaseFormElement {
         return formElementPickerSingle;
     }
 
-    public FormElementPickerSingle setTag(int mTag) {
+    public FormElementPickerSingle setTag(String mTag) {
         return (FormElementPickerSingle)  super.setTag(mTag);
     }
 

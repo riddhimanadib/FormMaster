@@ -15,7 +15,7 @@ public class FormElementTextNumber extends BaseFormElement {
         return FormElementTextNumber;
     }
 
-    public FormElementTextNumber setTag(int mTag) {
+    public FormElementTextNumber setTag(String mTag) {
         return (FormElementTextNumber)  super.setTag(mTag);
     }
 

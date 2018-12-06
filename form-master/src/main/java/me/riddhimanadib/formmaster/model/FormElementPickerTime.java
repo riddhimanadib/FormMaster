@@ -21,7 +21,7 @@ public class FormElementPickerTime extends BaseFormElement {
         return formElementPickerTime;
     }
 
-    public FormElementPickerTime setTag(int mTag) {
+    public FormElementPickerTime setTag(String mTag) {
         return (FormElementPickerTime)  super.setTag(mTag);
     }
 

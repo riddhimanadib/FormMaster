@@ -18,7 +18,7 @@ public class FormElementSwitch extends BaseFormElement {
         return FormElementSwitch;
     }
 
-    public FormElementSwitch setTag(int mTag) {
+    public FormElementSwitch setTag(String mTag) {
         return (FormElementSwitch)  super.setTag(mTag);
     }
 

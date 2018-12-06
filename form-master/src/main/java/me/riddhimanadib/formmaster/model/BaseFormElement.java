@@ -21,7 +21,7 @@ public class BaseFormElement {
     public static final int TYPE_SWITCH = 11;
 
     // private variables
-    private int mTag; // unique tag to identify the object
+    private String mTag; // unique tag to identify the object
     private int mType; // type for the form element
     private String mTitle; // title to be shown on left
     private String mValue; // value to be shown on right
@@ -29,7 +29,7 @@ public class BaseFormElement {
     private boolean mRequired; // value to set is the field is required
 
     // setters
-    public BaseFormElement setTag(int mTag) {
+    public BaseFormElement setTag(String mTag) {
         this.mTag = mTag;
         return this;
     }
@@ -60,7 +60,7 @@ public class BaseFormElement {
     }
 
     // getters
-    public int getTag() {
+    public String getTag() {
         return this.mTag;
     }
 

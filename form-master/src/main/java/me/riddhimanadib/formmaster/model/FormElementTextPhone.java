@@ -15,7 +15,7 @@ public class FormElementTextPhone extends BaseFormElement {
         return FormElementTextPhone;
     }
 
-    public FormElementTextPhone setTag(int mTag) {
+    public FormElementTextPhone setTag(String mTag) {
         return (FormElementTextPhone)  super.setTag(mTag);
     }
 
